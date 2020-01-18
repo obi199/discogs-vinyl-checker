@@ -1,5 +1,5 @@
 
-##Python web app built with with Flask to search discogs
+## Python web app built with with Flask to search discogs
 
 **Requirements:**
 1. active discogs account
