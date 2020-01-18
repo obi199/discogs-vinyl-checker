@@ -1,0 +1,11 @@
+
+*webapp built with in Python with Flask to search discogs and your collection*
+
+requirements:
+1. valid discogs account
+
+2. Python:
+- Flask
+- discogs_client
+- discogs_client_oauth
+- sqlalchemy
