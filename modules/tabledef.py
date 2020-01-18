@@ -3,13 +3,14 @@ from sqlalchemy import create_engine, ForeignKey
 from sqlalchemy import Column, Date, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, backref
+from discogs_settings import userdb, table
 
-engine = create_engine('sqlite:///userdb', echo=True)
+engine = create_engine(userdb, echo=True)
 Base = declarative_base()
 
 class User(Base):
 
-    __tablename__ = "users"
+    __tablename__ = table
 
     id = Column(Integer, primary_key=True)
     username = Column(String)

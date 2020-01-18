@@ -1,8 +1,8 @@
 
-*webapp built with in Python with Flask to search discogs and your collection*
+*Python web app built with with Flask to search discogs using the API
 
 requirements:
-1. valid discogs account
+1. discogs account
 
 2. Python:
 - Flask
