@@ -1,4 +1,6 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
 from flask import jsonify, json, Flask, flash, redirect, render_template, request, session, abort
 import search_API
 from discogs_client_oauth import authenticate
