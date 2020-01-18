@@ -1,8 +1,8 @@
 
-*Python web app built with with Flask to search discogs using the API
+##Python web app built with with Flask to search discogs
 
-requirements:
-1. discogs account
+**Requirements:**
+1. active discogs account
 
 2. Python:
 - Flask
