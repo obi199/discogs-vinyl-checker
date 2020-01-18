@@ -24,16 +24,16 @@ class results:
             #if i.data['type'] == 'release' and i.data['format'][0] == 'Vinyl':
             result = str(i)
             result = result.split("'")
-            newDic = {'type': k.rtype(),\
+            newDic = {'type': k.query('type'),\
             'name': result[1], \
             'hyperlink': "https://www.discogs.com"  + i.data['uri'], \
-            'year' : k.year(), \
-            'label': k.label(), \
-            'catno': k.catno(),\
-            'country': k.country(),\
-            'community': k.community(),\
-            'id': k.id(),\
-            'format': k.format()}
+            'year' : k.query('year'), \
+            'label': k.query('label'), \
+            'catno': k.query('catno'),\
+            'country': k.query('country'),\
+            'community': k.query('community'),\
+            'id': k.query('id'),\
+            'format': k.query('format')}
             results_per_page.append(newDic)
         return results_per_page
 
@@ -41,46 +41,13 @@ class release_data:
 
     def __init__(self, release):
         self._release = release
-    def id(self):
-        id = self._release.id
-        #id = self._release.data['id']
-        return id
-    def artist_name(self):
-        artist_name = self._release.data['name']
-        return artist_name
-    def rtype(self):
-        rtype = self._release.data['type']
-        return rtype
-    def year(self):
-        year = ""
-        if 'year' in self._release.data:
-            year = self._release.data['year']
-        return year
-    def label (self):
-        label = ""
-        if 'label' in self._release.data:
-            label = self._release.data['label']
-        return label
-    def catno (self):
-        catno = ""
-        if 'catno' in self._release.data:
-            catno = self._release.data['catno']
-        return catno
-    def format (self):
-        format = ""
-        if 'format' in self._release.data:
-            format = self._release.data['format']
-        return format
-    def country (self):
-        country = ""
-        if 'country' in self._release.data:
-            country = self._release.data['country']
-        return country
-    def community (self):
-        community = ""
-        if 'community' in self._release.data:
-            community = self._release.data['community']
-        return community
+
+    def query(self, qstring):
+        if qstring in self._release.data:
+            query = self._release.data[qstring]
+            return query
+            
+    # todo check if in collection
     # def collection_item(self):
     #     ucollection = discogs_client.models.CollectionItemInstance(self._release.id)
     #     return ucollection
