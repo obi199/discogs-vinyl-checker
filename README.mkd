@@ -3,9 +3,14 @@
 
 **Requirements:**
 1. active discogs account
-
 2. Python:
 - Flask
 - discogs_client
 - discogs_client_oauth
 - sqlalchemy
+
+
+How to run app:
+- create developer application in discogs_settings
+- create user database with credentials and keys and add in settings
+- run python programm.py

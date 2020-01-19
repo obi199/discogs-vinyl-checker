@@ -8,20 +8,14 @@ class results:
         self._discogsclient = discogsclient
         self._stringInput = stringInput
         self._results = self._discogsclient.search(self._stringInput, format=format, type=type)
-        #results = discogsclient.search(stringInput, headers={'User-agent': discogsclient.user_agent})
     def results(self):
         results = self._results
         return results
-        # self.result_number = results.count
-        # self.result_pages = results.pages
-        # self.result_per_page = results.per_page
     def release_results(self):
         items_per_page = int(self._results.per_page)
         results_per_page = []
         for i in self._results.page(0):
-    #        print i.data
             k = release_data(i)
-            #if i.data['type'] == 'release' and i.data['format'][0] == 'Vinyl':
             result = str(i)
             result = result.split("'")
             newDic = {'type': k.query('type'),\
@@ -54,7 +48,7 @@ class release_data:
     #     return ucollection
 
 class full_release_object(release_data):
-
+    #fetches full data object
     def __init__(self, release):
         self._release = release
         self._release.fetch(self._release.url)
