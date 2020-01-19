@@ -11,6 +11,6 @@
 
 
 How to run app:
-- create developer application in discogs_settings
+- create developer application in your discogs account
 - create user database with credentials and keys and add in settings
 - run python programm.py
