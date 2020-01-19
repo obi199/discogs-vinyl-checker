@@ -72,26 +72,28 @@ def contact(type,item_id):
     #     item_id = item_id #request.form['foo']
     #
     if type == 'release':
-        k = search_API.full_release_object(item_id,discogsclient)
+        release = discogsclient.release(item_id)
+        k = search_API.full_release_object(release)
         #rObject = k.get_object(item_id, discogsclient).release_object(item_id)
-        lowest_price = k.lowest_price()
+        lowest_price = k.query('lowest_price')
         artists_name =  k.artists_name()
-        title =  k.title()
+        title =  k.query('title')
         labels =  k.labels()
         catno =  k.catno()
-        year =  k.year()
-        country =  k.country()
+        year =  k.query('year')
+        country =  k.query('country')
         rating_average = k.rating_average()
-        have = k.have()
-        want = k.want()
-        tracklist = k.tracklist()
+        community = k.query('community')
+        have = community['have']
+        want = community['want']
+        tracklist = k.query('tracklist')
         tracks = k.tracklist_format(tracklist)
         videos = k.videos()
         formats = k.formats()
-        styles = k.styles()
+        styles = k.query('styles')
         image = k.image()
         uri150 = k.uri150()
-        uri = k.uri()
+        uri = k.query('uri')
 
         #all_data = k.data()#json.dumps(k.data)
         return render_template('info.html', item_id = item_id, \

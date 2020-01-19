@@ -45,44 +45,28 @@ class release_data:
     def query(self, qstring):
         if qstring in self._release.data:
             query = self._release.data[qstring]
-            return query
-            
+        else:
+            query = ''
+        return query
     # todo check if in collection
     # def collection_item(self):
     #     ucollection = discogs_client.models.CollectionItemInstance(self._release.id)
     #     return ucollection
 
-class full_release_object:
+class full_release_object(release_data):
 
-    def __init__(self, id, discogsclient):
-        self._discogsclient = discogsclient
-        self._release = self._discogsclient.release(id)
+    def __init__(self, release):
+        self._release = release
         self._release.fetch(self._release.url)
         print self._release.data['resource_url']
     def data(self):
         data = self._release.data
         json.dumps(data)
         return data
-    def rating(self):
-        rating = ""
-        if 'rating' in self._release.data:
-            rating = self._release.data['rating']
-        return rating
-    def lowest_price(self):
-        lowest_price = ""
-        if 'lowest_price' in self._release.data:
-            lowest_price = self._release.data['lowest_price']
-        else:
-            lowest_price = 'not for sale'
-        return lowest_price
     def artists_name(self):
         if 'artists' in self._release.data:
             artists_name = self._release.data['artists'][0]['name']
             return artists_name
-    def title(self):
-        if 'title' in self._release.data:
-            title = self._release.data['title']
-            return title
     def labels(self):
         if 'labels' in self._release.data:
             labels = self._release.data['labels'][0]['name']
@@ -91,32 +75,10 @@ class full_release_object:
         if 'labels' in self._release.data:
             catno = self._release.data['labels'][0]['catno']
             return catno
-    def year(self):
-        if 'year' in self._release.data:
-            year = self._release.data['year']
-            return year
-    def country(self):
-        if 'country' in self._release.data:
-            country = self._release.data['country']
-            return country
     def rating_average(self):
         if 'community' in self._release.data:
             rating_average = self._release.data['community']['rating']['average']
             return rating_average
-    def have(self):
-        if 'community' in self._release.data:
-            have = self._release.data['community']['have']
-            return have
-    def want(self):
-        if 'community' in self._release.data:
-            want = self._release.data['community']['want']
-            return want
-    def tracklist(self):
-        if 'tracklist' in self._release.data:
-            tracklist = self._release.data['tracklist']
-        else:
-            tracklist = ['No tracklist']
-        return tracklist
     def tracklist_format(self, tracklist):
         tracks = []
         for track in tracklist  :
@@ -142,12 +104,6 @@ class full_release_object:
         else:
             formats = []
         return formats
-    def styles(self):
-        styles = []
-        if 'styles' in self._release.data:
-            styles = self._release.data['styles']
-        return styles
-
     def image(self):
         img = self._release.data['images'][0]['resource_url']
         return img
@@ -158,10 +114,6 @@ class full_release_object:
         if 'name' in self._release.data:
             artists_name = self._release.data['aliases'][0]['name']
             return artists_name
-    def uri(self):
-        if 'uri' in self._release.data:
-            uri = self._release.data['uri']
-            return uri
 
 class full_master_object:
 
