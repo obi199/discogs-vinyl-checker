@@ -52,28 +52,12 @@ class full_release_object(release_data):
     def __init__(self, release):
         self._release = release
         self._release.fetch(self._release.url)
-        print self._release.data['resource_url']
+        #print self._release.data['resource_url']
     def data(self):
         data = self._release.data
         json.dumps(data)
         return data
-    def artists_name(self):
-        if 'artists' in self._release.data:
-            artists_name = self._release.data['artists'][0]['name']
-            return artists_name
-    def labels(self):
-        if 'labels' in self._release.data:
-            labels = self._release.data['labels'][0]['name']
-            return labels
-    def catno(self):
-        if 'labels' in self._release.data:
-            catno = self._release.data['labels'][0]['catno']
-            return catno
-    def rating_average(self):
-        if 'community' in self._release.data:
-            rating_average = self._release.data['community']['rating']['average']
-            return rating_average
-    def tracklist_format(self, tracklist):
+    def format_tracklist(self, tracklist):
         tracks = []
         for track in tracklist  :
             #x = ""
@@ -92,22 +76,7 @@ class full_release_object(release_data):
     def vid_id(self, uri):
         string, vid_id = uri.split('v=')
         return vid_id
-    def formats(self):
-        if 'formats' in self._release.data:
-            formats = self._release.data['formats'][0]['descriptions']
-        else:
-            formats = []
-        return formats
-    def image(self):
-        img = self._release.data['images'][0]['resource_url']
-        return img
-    def uri150(self):
-        uri150 = self._release.data['images'][0]['uri150']
-        return uri150
-    def name(self):
-        if 'name' in self._release.data:
-            artists_name = self._release.data['aliases'][0]['name']
-            return artists_name
+
 
 class full_master_object:
 
