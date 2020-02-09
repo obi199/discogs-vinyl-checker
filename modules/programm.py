@@ -102,31 +102,35 @@ def contact(type,item_id):
                 tracks = tracks, videos = videos, formats = formats, styles = styles, uri150=uri150, uri=uri)
 
     elif type == 'master':
-        k = search_API.full_master_object(item_id,discogsclient)
-        artists_name =  k.artists_name()
-        title =  k.title()
-        year =  k.year()
-        tracklist = k.tracklist()
+        master = discogsclient.master(item_id)
+        k = search_API.full_master_object(master)
+        artists_name =  k.query('artists')[0]['name']
+        title =  k.query('title')
+        year =  k.query('year')
+        tracklist = k.query('tracklist')
         tracks = k.tracklist_format(tracklist)
         videos = k.videos()
-        uri150 = k.uri150()
-        genres = k.genres()
-        lowest_price =k.lowest_price()
+        uri150 = k.query('images')[0]['uri150']
+        genres = k.query('genres')
+        lowest_price =k.query('lowest_price')
         return render_template('master.html', item_id = item_id, \
                 artists_name = artists_name, title = title, \
                 tracks = tracks, genres = genres, lowest_price = lowest_price, uri150=uri150)
 
 
     elif type == 'artist':
-        k = search_API.full_release_object(item_id,discogsclient)
-        artists_name =  k.artists_name()
-        name_var = k.name_variations()
-        profile = k.profile()
-        url = k.data['resource_url']
+        artist = discogsclient.artist(item_id)
+        k = search_API.artist(artist)
+        artists_name =  k.query('name')
+        name_var = k.query('namevariations')
+        profile = k.query('profile')
+        uri150 = k.query('images')[0]['uri150']
+        url = k.query('resource_url')
+        all_data = k.all_data
         #rObject.fetch(url)
         #rObject.fetch(rObject.url)
         return render_template('artist.html',all_data = all_data, url = url, artists_name = artists_name, \
-        name_var = name_var, profile = profile)
+        name_var = name_var, profile = profile, uri150 = uri150)
 
     else:
         None

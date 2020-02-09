@@ -80,33 +80,17 @@ class full_release_object(release_data):
 
 class full_master_object:
 
-    def __init__(self, id, discogsclient):
-        self._discogsclient = discogsclient
-        self._master = self._discogsclient.master(id)
+    def __init__(self, master):
+        self._master = master
         self._master.fetch(self._master.url)
-        print self._master.data['resource_url']
-    def data(self):
-        data = self._master.data
-        json.dumps(data)
-        return data
-    def artists_name(self):
-        if 'artists' in self._master.data:
-            artists_name = self._master.data['artists'][0]['name']
-            return artists_name
-    def title(self):
-        if 'title' in self._master.data:
-            title = self._master.data['title']
-            return title
-    def year(self):
-        if 'year' in self._master.data:
-            year = self._master.data['year']
-            return year
-    def tracklist(self):
-        if 'tracklist' in self._master.data:
-            tracklist = self._master.data['tracklist']
+    #    print self._master.data['resource_url']
+    def query(self, qstring):
+        if qstring in self._master.data:
+            query = self._master.data[qstring]
         else:
-            tracklist = ['No tracklist']
-        return tracklist
+            query = ''
+        return query
+
     def tracklist_format(self, tracklist):
         tracks = []
         for track in tracklist  :
@@ -126,32 +110,22 @@ class full_master_object:
     def vid_id(self, uri):
         string, vid_id = uri.split('v=')
         return vid_id
-    def image(self):
-        img = self._master.data['images'][0]['resource_url']
-        return img
-    def uri150(self):
-        uri150 = self._master.data['images'][0]['uri150']
-        return uri150
-    def lowest_price(self):
-        lowest_price = ""
-        if 'lowest_price' in self._master.data:
-            lowest_price = self._master.data['lowest_price']
-        return lowest_price
-    def main_release_url(self):
-        main_release_url = ""
-        if 'main_release_url' in self._master.data:
-            main_release_url = self._master.data['main_release_url']
-        return main_release_url
-    def main_release(self):
-        main_release = ""
-        if 'main_release' in self._master.data:
-            main_release = self._master.data['main_release']
-        return main_release
-    def genres(self):
-        genres = []
-        if 'genres' in self._master.data:
-            genres = self._master.data['genres']
-        return genres
+
+class artist:
+
+    def __init__(self, artist):
+        self._artist = artist
+        self._artist.fetch(self._artist.url)
+        print self._artist.data
+        self.all_data = self._artist.data
+
+    def query(self, qstring):
+        if qstring in self._artist.data:
+            query = self._artist.data[qstring]
+        else:
+            query = ''
+        return query
+
 
 class user:
 

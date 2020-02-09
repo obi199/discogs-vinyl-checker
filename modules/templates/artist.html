@@ -1,29 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-
-<body>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+  </head>
+<body class="text-center">
+  <img src={{uri150}} alt="picture"><br>
     <p><b>{{artists_name}} </b><p>
         <p> {{name_var}}<p>
-          <p> {{profile}}<p>
-    <p> {{url}}<p>
-    <p>{% for item in formats %}
-    {{item}},
-    {% endfor %}</p>
-    <p>Label: {{labels}} ({{catno}})<p>
-    <p>Style: {% for item in styles %}
-      {{item}},
-      {% endfor %}</p>
-
-
-    <p>{{all_data}}<p>
-
-
-
+        <p> {{profile}}<p>
 
 
 
     <button onclick="goBack()">Go Back</button>
+
+  <p> {{all_data}}<p>
 
     <script>
     function goBack() {
