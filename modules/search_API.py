@@ -1,6 +1,16 @@
 # -*- coding: utf-8 -*-
 import json
 import discogs_client
+import logging
+
+logger = logging.getLogger(__name__)
+print logger
+handler = logging.StreamHandler()
+formatter = logging.Formatter(
+        '%(asctime)s %(name)-12s %(levelname)-8s %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+logger.setLevel(logging.DEBUG)
 
 class results:
 
@@ -8,6 +18,7 @@ class results:
         self._discogsclient = discogsclient
         self._stringInput = stringInput
         self._results = self._discogsclient.search(self._stringInput, format=format, type=type)
+        logger.info(self._stringInput)
     def results(self):
         results = self._results
         return results
@@ -16,10 +27,9 @@ class results:
         results_per_page = []
         for i in self._results.page(0):
             k = release_data(i)
-            result = str(i)
-            result = result.split("'")
+            #logger.info(str(k.data()))
             newDic = {'type': k.query('type'),\
-            'name': result[1], \
+            'name':k.query('title'), \
             'hyperlink': "https://www.discogs.com"  + i.data['uri'], \
             'year' : k.query('year'), \
             'label': k.query('label'), \
@@ -27,7 +37,10 @@ class results:
             'country': k.query('country'),\
             'community': k.query('community'),\
             'id': k.query('id'),\
-            'format': k.query('format')}
+            'format': k.query('format'),\
+            'in_collection': k.query('user_data')['in_collection'],\
+            'in_wantlist': k.query('user_data')['in_wantlist']}
+            logger.info(newDic)
             results_per_page.append(newDic)
         return results_per_page
 
@@ -35,6 +48,9 @@ class release_data:
 
     def __init__(self, release):
         self._release = release
+
+    def data(self):
+        return self._release.data
 
     def query(self, qstring):
         if qstring in self._release.data:
@@ -116,7 +132,6 @@ class artist:
     def __init__(self, artist):
         self._artist = artist
         self._artist.fetch(self._artist.url)
-        print self._artist.data
         self.all_data = self._artist.data
 
     def query(self, qstring):

@@ -28,6 +28,15 @@
       {{item['format'][0]}}    {{item['format'][1]}}     {{item['country']}} {{item['year']}}
       {{item['label'][0]}}    {{item['catno']}}  &nbsp; have: {{item['community']['have']}}
       want: {{item['community']['want']}} &nbsp;
+
+      {% if item['in_collection'] is sameas true %}
+       <em style="color: green;">&#10004</em>
+      {% endif %}
+
+      {% if item['in_wantlist'] is sameas true %}
+       <em style="color: red;">w</em>
+      {% endif %}
+
     </p>
     {% endfor %}
     <p>  {{result_PerPage}} results per page <p>
