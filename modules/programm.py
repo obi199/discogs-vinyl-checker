@@ -10,7 +10,9 @@ import os
 from sqlalchemy.orm import sessionmaker
 from tabledef import *
 
-
+# Session = sessionmaker(bind=engine)
+# s = Session()
+#userc = tabledef.user()
 app = Flask(__name__)
 
 @app.route('/')
@@ -18,19 +20,17 @@ def home():
     if not session.get('logged_in'):
         return render_template('login.html')
     else:
-        #print search_API.identity(discogsclient)
-
         return render_template('search_discogs.html')
 
 @app.route('/login', methods=['POST'])
-def do_admin_login():
+def do_login():
+
     POST_USERNAME = str(request.form['username'])
     POST_PASSWORD = str(request.form['password'])
-
-    Session = sessionmaker(bind=engine)
-    s = Session()
-    query = s.query(User).filter(User.username.in_([POST_USERNAME]), User.password.in_([POST_PASSWORD]) )
-    result = query.first()
+    # userc.check_credentials(POST_USERNAME,POST_PASSWORD)
+    # query = s.query(User).filter(User.username.in_([POST_USERNAME]), User.password.in_([POST_PASSWORD]) )
+    # result = query.first()
+    result = check_credentials(POST_USERNAME,POST_PASSWORD)
     if result:
         global discogsclient
         discogsclient = discogs_client.Client(discogs_settings.user_agent, result.consumer_key, \
@@ -38,6 +38,13 @@ def do_admin_login():
         session['logged_in'] = True
     else:
         flash('wrong password!')
+    return home()
+
+@app.route('/new_user', methods=['POST'])
+def new_user():
+    POST_USERNAME = str(request.form['username'])
+    POST_PASSWORD = str(request.form['password'])
+
     return home()
 
 @app.route("/logout")

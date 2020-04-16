@@ -27,7 +27,7 @@ class results:
         results_per_page = []
         for i in self._results.page(0):
             k = release_data(i)
-            #logger.info(str(k.data()))
+            logger.info(str(k.query('user_data')))
             newDic = {'type': k.query('type'),\
             'name':k.query('title'), \
             'hyperlink': "https://www.discogs.com"  + i.data['uri'], \
@@ -40,7 +40,7 @@ class results:
             'format': k.query('format'),\
             'in_collection': k.query('user_data')['in_collection'],\
             'in_wantlist': k.query('user_data')['in_wantlist']}
-            logger.info(newDic)
+            #logger.info(newDic)
             results_per_page.append(newDic)
         return results_per_page
 
@@ -154,9 +154,6 @@ class user:
     def collection(self):
         return self._discogsclient._get("{0}/collection/folders/1/releases".format(self.userObj.data['resource_url']))
         #return self.user.collection_all()
-    def collection_item_by_release(self):
-        #to do
-        #/users/{username}/collection/releases/{release_id}
-        pass
+
     def collection_value(self):
         return self.client._get("{0}/collection/value".format(self.userObj.data['resource_url']))

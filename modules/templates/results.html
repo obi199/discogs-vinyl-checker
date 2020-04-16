@@ -28,7 +28,7 @@
       {{item['format'][0]}}    {{item['format'][1]}}     {{item['country']}} {{item['year']}}
       {{item['label'][0]}}    {{item['catno']}}  &nbsp; have: {{item['community']['have']}}
       want: {{item['community']['want']}} &nbsp;
-
+      {{item['in_collection']}}
       {% if item['in_collection'] is sameas true %}
        <em style="color: green;">&#10004</em>
       {% endif %}
