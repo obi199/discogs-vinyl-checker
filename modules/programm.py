@@ -19,6 +19,7 @@ app = Flask(__name__)
 def home():
     if not session.get('logged_in'):
         return render_template('login.html')
+        #return render_template('new_user.html')
     else:
         return render_template('search_discogs.html')
 
@@ -27,10 +28,14 @@ def do_login():
 
     POST_USERNAME = str(request.form['username'])
     POST_PASSWORD = str(request.form['password'])
+    #NEWUSER = str(request.form['new_user'])
+    #new_user = str(request.form['new_user'])
     # userc.check_credentials(POST_USERNAME,POST_PASSWORD)
     # query = s.query(User).filter(User.username.in_([POST_USERNAME]), User.password.in_([POST_PASSWORD]) )
     # result = query.first()
     result = check_credentials(POST_USERNAME,POST_PASSWORD)
+    # if str(request.form['new_user']):
+    #     return render_template('new_user.html')
     if result:
         global discogsclient
         discogsclient = discogs_client.Client(discogs_settings.user_agent, result.consumer_key, \
@@ -44,8 +49,10 @@ def do_login():
 def new_user():
     POST_USERNAME = str(request.form['username'])
     POST_PASSWORD = str(request.form['password'])
-
-    return home()
+    USER_ID = str(request.form['username'])
+    add_user(USER_ID,POST_USERNAME, POST_PASSWORD)
+    flash('ok!')
+    #return home()
 
 @app.route("/logout")
 def logout():

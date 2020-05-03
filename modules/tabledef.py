@@ -6,7 +6,7 @@ from sqlalchemy.orm import relationship, backref
 from discogs_settings import userdb, table
 from sqlalchemy.orm import sessionmaker
 from passlib.hash import sha256_crypt
-
+import discogs_settings
 # password = sha256_crypt.encrypt("password")
 # password2 = sha256_crypt.encrypt("password")
 # print(sha256_crypt.verify("password", password))
@@ -26,7 +26,8 @@ class User(Base):
     oauth_token = Column(String)
     oauth_token_secret = Column(String)
 
-    def __init__(self, username, password,consumer_key,consumer_secret):
+    def __init__(self, id, username, password,consumer_key,consumer_secret,oauth_token,oauth_token_secret):
+        self.id = id
         self.username = username
         self.password = password
         self.consumer_key = consumer_key
@@ -36,10 +37,36 @@ class User(Base):
         # create tables
         Base.metadata.create_all(engine)
 
+def check_encrypted_password(password, hashed):
+    return sha256_crypt.verify(password, hashed)
+
 def check_credentials(POST_USERNAME, POST_PASSWORD):
-    query = s.query(User).filter(User.username.in_([POST_USERNAME]), User.password.in_([POST_PASSWORD]) )
-    return query.first()
+    query = s.query(User).filter(User.username == POST_USERNAME).first()
+    if check_encrypted_password(POST_PASSWORD, query.password):
+        return query
 #add user and check if name exists in db
-def add_user(POST_USERNAME, POST_PASSWORD):
+def add_user(USER_ID, POST_USERNAME, POST_PASSWORD):
     password = sha256_crypt.encrypt(POST_PASSWORD)
-    s.insert(User).values(username = POST_USERNAME, password = password)
+    new_user = User(id = 1, username = 'admin', password = password, consumer_key = discogs_settings.consumer_key, consumer_secret = discogs_settings.consumer_secret, \
+    oauth_token=discogs_settings.oauth_token, oauth_token_secret = discogs_settings.oauth_token_secret)
+    s.add(new_user)
+    s.flush()
+    s.commit()
+
+def update_password(POST_USERNAME, POST_PASSWORD):
+
+    our_user = s.query(User).filter_by(username=POST_USERNAME).first()
+    password = sha256_crypt.encrypt(POST_PASSWORD)
+
+    our_user.password = password
+    s.flush()
+    s.commit()
+
+if __name__ == "__main__":
+    #update_password('admin','pass')
+    #add_user(12, 'sdsd', 'dsdsd')
+    user = s.query(User).filter(User.username == 'admin').first()
+
+    print user.password
+    # for instance in s.query(User).order_by(User.id):
+    #     print(instance.username, instance.password)
