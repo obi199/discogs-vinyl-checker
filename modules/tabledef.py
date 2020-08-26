@@ -57,14 +57,6 @@ def add_user(POST_USERNAME, POST_PASSWORD,consumer_key = 'KpmpkHQmVfudnTVufUME',
     s.flush()
     s.commit()
 
-def update_password(POST_USERNAME, POST_PASSWORD):
-
-    our_user = s.query(User).filter_by(username=POST_USERNAME).first()
-    password = sha256_crypt.encrypt(POST_PASSWORD)
-
-    our_user.password = password
-    s.flush()
-    s.commit()
 
 if __name__ == "__main__":
     #update_password('admin','pass')

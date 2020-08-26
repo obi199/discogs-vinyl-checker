@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
+import functools
 from flask import jsonify, json, Flask, flash, redirect, render_template, request, session, abort
+from flask import Blueprint, flash, g, url_for
 import search_API
 from discogs_client_oauth import authenticate
 import discogs_client
@@ -10,58 +11,19 @@ import os
 from sqlalchemy.orm import sessionmaker
 from tabledef import *
 from flask_sqlalchemy import SQLAlchemy
-# Session = sessionmaker(bind=engine)
+from modules.auth import login_required
+import db
 # s = Session()
 #userc = tabledef.user()
-app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = discogs_settings.userdb
-db = SQLAlchemy(app)
+# @app.route('/')
+# def home():
+#     if not session.get('logged_in'):
+#         return render_template('login.html')
+#         #return render_template('new_user.html')
+#     else:
+#         return render_template('search_discogs.html')
 
-class User(db.Model):
-    __tablename__ = table
-    id = db.Column(Integer, primary_key=True, autoincrement=True)
-    username = db.Column(String)
-    password = db.Column(String)
-    consumer_key = db.Column(String)
-    consumer_secret = db.Column(String)
-    oauth_token = db.Column(String)
-    oauth_token_secret = db.Column(String)
-
-def __init__(self, username, password,consumer_key,consumer_secret,oauth_token,oauth_token_secret):
-    #self.id = id
-    self.username = username
-    self.password = password
-    self.consumer_key = consumer_key
-    self.consumer_secret = consumer_secret
-    self.oauth_token = oauth_token
-    self.oauth_token_secret = oauth_token_secret
-    # create tables
-    #db.create_all()
-
-@app.route('/')
-def home():
-    if not session.get('logged_in'):
-        return render_template('login.html')
-        #return render_template('new_user.html')
-    else:
-        return render_template('search_discogs.html')
-
-@app.route('/login', methods=['POST','GET'])
-def do_login():
-    if request.method == 'POST':
-        POST_USERNAME = str(request.form['username'])
-        POST_PASSWORD = str(request.form['password'])
-        result = check_credentials(User,POST_USERNAME,POST_PASSWORD)
-        if POST_USERNAME:
-            if result:
-                global discogsclient
-                discogsclient = discogs_client.Client(discogs_settings.user_agent, result.consumer_key, \
-                result.consumer_secret, result.oauth_token, result.oauth_token_secret)
-                session['logged_in'] = True
-                return home()
-            else:
-                flash('wrong password!')
 
     # if request.method == 'POST':
     #     if str(request.form['new_user']):
@@ -69,22 +31,34 @@ def do_login():
     #
 
 
-@app.route('/new_user', methods=['POST'])
-def new_user():
-    POST_USERNAME = str(request.form['username'])
-    POST_PASSWORD = str(request.form['password'])
-    add_user(POST_USERNAME, POST_PASSWORD)
-    flash('User created!')
-    return home()
 
-@app.route("/logout")
-def logout():
-    session['logged_in'] = False
-    return home()
+#
+# @app.route("/logout")
+# def logout():
+#     session['logged_in'] = False
+#     return home()
+#
+bp = Blueprint('search', __name__)
 
-@app.route('/', methods=['POST','GET'])
+@bp.route('/', methods=['POST','GET'])
+def main():
+    if not session.get('logged_in'):
+        return redirect('/auth/login')
+    else:
+
+        return render_template('search_discogs.html')
+
+# @bp.route('/search', methods=['GET'])
+# def search():
+#     if not session.get('logged_in'):
+#         return redirect('/auth/login')
+#
+#     else:
+#         return render_template('search_discogs.html')
+
+@bp.route('/search', methods=['POST','GET'])
 def my_form_post():
-
+    #if request.method == 'POST':
     text = request.form['text']
     search_name = text
     format = ''
@@ -93,7 +67,9 @@ def my_form_post():
         format = 'vinyl'
     if request.form['type'] == '1':
         type = 'release'
-
+    # user_id = session.get('user_id')
+    # discogsclient = discogs_client.Client(discogs_settings.user_agent, user.consumer_key, \
+    # user.consumer_secret, user.oauth_token, user.oauth_token_secret)
     k = search_API
     search = k.results(search_name, discogsclient, format, type)
     result_Number = search.results().count
@@ -103,7 +79,7 @@ def my_form_post():
     return render_template('results.html', results = results, result_Number = result_Number, \
 result_Pages = result_Pages, result_PerPage = result_PerPage)
 
-@app.route('/<type>/<item_id>', methods=['POST', 'GET'])
+@bp.route('/<type>/<item_id>', methods=['POST', 'GET'])
 def contact(type,item_id):
     # if request.method == 'POST':
     #     item_id = item_id #request.form['foo']
@@ -173,7 +149,7 @@ def contact(type,item_id):
         None
         #item_id = k.search_discogs(rObject).id(rObject)
 
-@app.route('/collection', methods=['POST','GET'])
+@bp.route('/collection', methods=['POST','GET'])
 def collection():
     import discogs_settings
     discogsclient = discogs_settings.client

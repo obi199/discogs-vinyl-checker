@@ -1,11 +1,11 @@
 <link rel="stylesheet" href="/static/style.css" type="text/css">
 
 
-<form action="/login" method="POST">
+<form action="/auth/register" method="POST">
 <div class="login">
 <div class="login-screen">
 <div class="app-title">
-<h1>Login</h1>
+<h1>New User</h1>
 </div>
 <div class="login-form">
 <div class="control-group">
@@ -14,10 +14,7 @@
 <div class="control-group">
   <input type="password" class="login-field" value="" placeholder="password" name="password">
 <label class="login-field-icon fui-lock" for="login-pass"></label></div>
-<input type="submit" value="Log in" class="btn btn-primary btn-large btn-block">
-<p>
-<input type="submit" name="new_user" class="btn btn-primary btn-small btn-block" value="New User"
-
+<input type="submit" value="Create User" class="btn btn-primary btn-large btn-block">
 {% with messages = get_flashed_messages() %}
   {% if messages %}
     <ul class=flashes>
