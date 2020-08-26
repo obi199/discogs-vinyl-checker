@@ -9,11 +9,35 @@ import discogs_settings
 import os
 from sqlalchemy.orm import sessionmaker
 from tabledef import *
-
+from flask_sqlalchemy import SQLAlchemy
 # Session = sessionmaker(bind=engine)
 # s = Session()
 #userc = tabledef.user()
 app = Flask(__name__)
+
+app.config['SQLALCHEMY_DATABASE_URI'] = discogs_settings.userdb
+db = SQLAlchemy(app)
+
+class User(db.Model):
+    __tablename__ = table
+    id = db.Column(Integer, primary_key=True, autoincrement=True)
+    username = db.Column(String)
+    password = db.Column(String)
+    consumer_key = db.Column(String)
+    consumer_secret = db.Column(String)
+    oauth_token = db.Column(String)
+    oauth_token_secret = db.Column(String)
+
+def __init__(self, username, password,consumer_key,consumer_secret,oauth_token,oauth_token_secret):
+    #self.id = id
+    self.username = username
+    self.password = password
+    self.consumer_key = consumer_key
+    self.consumer_secret = consumer_secret
+    self.oauth_token = oauth_token
+    self.oauth_token_secret = oauth_token_secret
+    # create tables
+    #db.create_all()
 
 @app.route('/')
 def home():
@@ -23,36 +47,35 @@ def home():
     else:
         return render_template('search_discogs.html')
 
-@app.route('/login', methods=['POST'])
+@app.route('/login', methods=['POST','GET'])
 def do_login():
+    if request.method == 'POST':
+        POST_USERNAME = str(request.form['username'])
+        POST_PASSWORD = str(request.form['password'])
+        result = check_credentials(User,POST_USERNAME,POST_PASSWORD)
+        if POST_USERNAME:
+            if result:
+                global discogsclient
+                discogsclient = discogs_client.Client(discogs_settings.user_agent, result.consumer_key, \
+                result.consumer_secret, result.oauth_token, result.oauth_token_secret)
+                session['logged_in'] = True
+                return home()
+            else:
+                flash('wrong password!')
 
-    POST_USERNAME = str(request.form['username'])
-    POST_PASSWORD = str(request.form['password'])
-    #NEWUSER = str(request.form['new_user'])
-    #new_user = str(request.form['new_user'])
-    # userc.check_credentials(POST_USERNAME,POST_PASSWORD)
-    # query = s.query(User).filter(User.username.in_([POST_USERNAME]), User.password.in_([POST_PASSWORD]) )
-    # result = query.first()
-    result = check_credentials(POST_USERNAME,POST_PASSWORD)
-    # if str(request.form['new_user']):
-    #     return render_template('new_user.html')
-    if result:
-        global discogsclient
-        discogsclient = discogs_client.Client(discogs_settings.user_agent, result.consumer_key, \
-        result.consumer_secret, result.oauth_token, result.oauth_token_secret)
-        session['logged_in'] = True
-    else:
-        flash('wrong password!')
-    return home()
+    # if request.method == 'POST':
+    #     if str(request.form['new_user']):
+    #         return render_template('new_user.html')
+    #
+
 
 @app.route('/new_user', methods=['POST'])
 def new_user():
     POST_USERNAME = str(request.form['username'])
     POST_PASSWORD = str(request.form['password'])
-    USER_ID = str(request.form['username'])
-    add_user(USER_ID,POST_USERNAME, POST_PASSWORD)
-    flash('ok!')
-    #return home()
+    add_user(POST_USERNAME, POST_PASSWORD)
+    flash('User created!')
+    return home()
 
 @app.route("/logout")
 def logout():
