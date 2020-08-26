@@ -68,8 +68,8 @@ def my_form_post():
     if request.form['type'] == '1':
         type = 'release'
     # user_id = session.get('user_id')
-    # discogsclient = discogs_client.Client(discogs_settings.user_agent, user.consumer_key, \
-    # user.consumer_secret, user.oauth_token, user.oauth_token_secret)
+    discogsclient = discogs_client.Client(discogs_settings.user_agent, g.user.consumer_key, \
+     g.user.consumer_secret, g.user.oauth_token, g.user.oauth_token_secret)
     k = search_API
     search = k.results(search_name, discogsclient, format, type)
     result_Number = search.results().count

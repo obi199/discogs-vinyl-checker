@@ -28,13 +28,15 @@ def login():
     if request.method == 'POST':
         POST_USERNAME = str(request.form['username'])
         POST_PASSWORD = str(request.form['password'])
-        result = db.check_credentials(db.User,POST_USERNAME,POST_PASSWORD)
+        user = db.check_credentials(db.User,POST_USERNAME,POST_PASSWORD)
         if POST_USERNAME:
-            if result:
+            if user:
                 # global discogsclient
                 # discogsclient = discogs_client.Client(discogs_settings.user_agent, result.consumer_key, \
                 # result.consumer_secret, result.oauth_token, result.oauth_token_secret)
                 session['logged_in'] = True
+                session['user_id'] = user.id
+                print session['user_id']
                 return redirect('/')
             else:
                 flash('wrong password!')
@@ -48,9 +50,11 @@ def load_logged_in_user():
     if user_id is None:
         g.user = None
     else:
-        g.user = get_db().execute(
-            'SELECT * FROM user WHERE id = ?', (user_id,)
-        ).fetchone()
+        g.user = db.User.query.filter_by(id = user_id).first()
+        print(g.user.username)
+        # g.user = get_db().execute(
+        #     'SELECT * FROM user WHERE id = ?', (user_id,)
+        # ).fetchone()
 
 @bp.route('/logout')
 def logout():
