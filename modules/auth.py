@@ -51,7 +51,7 @@ def load_logged_in_user():
         g.user = None
     else:
         g.user = db.User.query.filter_by(id = user_id).first()
-        print(g.user.username)
+        #print(g.user.username)
         # g.user = get_db().execute(
         #     'SELECT * FROM user WHERE id = ?', (user_id,)
         # ).fetchone()

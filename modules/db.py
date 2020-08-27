@@ -43,8 +43,9 @@ def check_encrypted_password(password, hashed):
 
 def check_credentials(User, POST_USERNAME='', POST_PASSWORD=''):
     query = User.query.filter_by(username = POST_USERNAME).first()
-    if check_encrypted_password(POST_PASSWORD, query.password):
-        return query
+    if query:
+        if check_encrypted_password(POST_PASSWORD, query.password):
+            return query
 #add user and check if name exists in db
 def add_user(POST_USERNAME, POST_PASSWORD,consumer_key = 'KpmpkHQmVfudnTVufUME',consumer_secret = 'tEAvaSrmmXHKjzfHfqCAEWpXOdULpPXo', \
     oauth_token = 'aXqDiWXTljKJtlyriboZOwUxBNyAhQDyOTqIaXJU',oauth_token_secret ='bTcOJUaVaTrNwENYgpnoPAaUzrNsTHdfFOTYTFjz'):
