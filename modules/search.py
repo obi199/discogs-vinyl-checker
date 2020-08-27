@@ -83,7 +83,10 @@ result_Pages = result_Pages, result_PerPage = result_PerPage)
 def contact(type,item_id):
     # if request.method == 'POST':
     #     item_id = item_id #request.form['foo']
-    #
+
+    discogsclient = discogs_client.Client(discogs_settings.user_agent, g.user.consumer_key, \
+     g.user.consumer_secret, g.user.oauth_token, g.user.oauth_token_secret)
+     
     if type == 'release':
         release = discogsclient.release(item_id)
         k = search_API.full_release_object(release)
