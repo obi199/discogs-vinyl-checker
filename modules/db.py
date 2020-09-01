@@ -47,15 +47,15 @@ def check_credentials(User, POST_USERNAME='', POST_PASSWORD=''):
         if check_encrypted_password(POST_PASSWORD, query.password):
             return query
 #add user and check if name exists in db
-def add_user(POST_USERNAME, POST_PASSWORD,consumer_key = 'KpmpkHQmVfudnTVufUME',consumer_secret = 'tEAvaSrmmXHKjzfHfqCAEWpXOdULpPXo', \
-    oauth_token = 'aXqDiWXTljKJtlyriboZOwUxBNyAhQDyOTqIaXJU',oauth_token_secret ='bTcOJUaVaTrNwENYgpnoPAaUzrNsTHdfFOTYTFjz'):
-    USER_ID = uuid.uuid4()
-    password = sha256_crypt.encrypt(POST_PASSWORD)
-    new_user = User(username = POST_USERNAME, password = password, consumer_key=consumer_key,consumer_secret= consumer_secret, \
-    oauth_token = oauth_token, oauth_token_secret=oauth_token_secret)
-    s.add(new_user)
-    s.flush()
-    s.commit()
+# def add_user(table,POST_USERNAME, POST_PASSWORD,consumer_key = 'KpmpkHQmVfudnTVufUME',consumer_secret = 'tEAvaSrmmXHKjzfHfqCAEWpXOdULpPXo', \
+#     oauth_token = 'aXqDiWXTljKJtlyriboZOwUxBNyAhQDyOTqIaXJU',oauth_token_secret ='bTcOJUaVaTrNwENYgpnoPAaUzrNsTHdfFOTYTFjz'):
+#     USER_ID = uuid.uuid4()
+#     password = sha256_crypt.encrypt(POST_PASSWORD)
+#     new_user = User(username = POST_USERNAME, password = password, consumer_key=consumer_key,consumer_secret= consumer_secret, \
+#     oauth_token = oauth_token, oauth_token_secret=oauth_token_secret)
+#     db.session.add(new_user)
+#     User.flush()
+#     User.commit()
 
 def update_password(POST_USERNAME, POST_PASSWORD):
 

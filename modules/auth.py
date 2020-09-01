@@ -9,6 +9,8 @@ import discogs_settings
 import os
 from flask_sqlalchemy import SQLAlchemy
 import db
+from passlib.hash import sha256_crypt
+import uuid
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
@@ -17,7 +19,12 @@ def register():
     if request.method == 'POST':
         POST_USERNAME = str(request.form['username'])
         POST_PASSWORD = str(request.form['password'])
-        add_user(POST_USERNAME, POST_PASSWORD)
+        if not POST_USERNAME:
+            error = 'Username is required.'
+        elif not POST_PASSWORD:
+            error = 'Password is required.'
+        # elif username exists:
+        add_user(db.User,POST_USERNAME, POST_PASSWORD)
         flash('User created!')
         #return home()
     return render_template('auth/register.html')
@@ -71,3 +78,13 @@ def login_required(view):
         return view(**kwargs)
 
     return wrapped_view
+
+def add_user(User,POST_USERNAME, POST_PASSWORD,consumer_key = 'KpmpkHQmVfudnTVufUME',consumer_secret = 'tEAvaSrmmXHKjzfHfqCAEWpXOdULpPXo', \
+    oauth_token = 'aXqDiWXTljKJtlyriboZOwUxBNyAhQDyOTqIaXJU',oauth_token_secret ='bTcOJUaVaTrNwENYgpnoPAaUzrNsTHdfFOTYTFjz'):
+    USER_ID = uuid.uuid4()
+    password = sha256_crypt.encrypt(POST_PASSWORD)
+    new_user = User(username = POST_USERNAME, password = password, consumer_key=consumer_key,consumer_secret= consumer_secret, \
+    oauth_token = oauth_token, oauth_token_secret=oauth_token_secret)
+    db.dbase.session.add(new_user)
+    db.dbase.session.flush()
+    db.dbase.session.commit()
