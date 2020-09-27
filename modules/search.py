@@ -9,7 +9,7 @@ import discogs_client
 import discogs_settings
 import os
 from sqlalchemy.orm import sessionmaker
-from tabledef import *
+#from tabledef import *
 from flask_sqlalchemy import SQLAlchemy
 from modules.auth import login_required
 import db
@@ -86,7 +86,7 @@ def contact(type,item_id):
 
     discogsclient = discogs_client.Client(discogs_settings.user_agent, g.user.consumer_key, \
      g.user.consumer_secret, g.user.oauth_token, g.user.oauth_token_secret)
-     
+
     if type == 'release':
         release = discogsclient.release(item_id)
         k = search_API.full_release_object(release)

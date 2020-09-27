@@ -38,14 +38,7 @@ def __init__(self, username, password,consumer_key,consumer_secret,oauth_token,o
     self.oauth_token = oauth_token
     self.oauth_token_secret = oauth_token_secret
 
-def check_encrypted_password(password, hashed):
-    return sha256_crypt.verify(password, hashed)
 
-def check_credentials(User, POST_USERNAME='', POST_PASSWORD=''):
-    query = User.query.filter_by(username = POST_USERNAME).first()
-    if query:
-        if check_encrypted_password(POST_PASSWORD, query.password):
-            return query
 #add user and check if name exists in db
 # def add_user(table,POST_USERNAME, POST_PASSWORD,consumer_key = 'KpmpkHQmVfudnTVufUME',consumer_secret = 'tEAvaSrmmXHKjzfHfqCAEWpXOdULpPXo', \
 #     oauth_token = 'aXqDiWXTljKJtlyriboZOwUxBNyAhQDyOTqIaXJU',oauth_token_secret ='bTcOJUaVaTrNwENYgpnoPAaUzrNsTHdfFOTYTFjz'):
@@ -56,12 +49,3 @@ def check_credentials(User, POST_USERNAME='', POST_PASSWORD=''):
 #     db.session.add(new_user)
 #     User.flush()
 #     User.commit()
-
-def update_password(POST_USERNAME, POST_PASSWORD):
-
-    our_user = s.query(User).filter_by(username=POST_USERNAME).first()
-    password = sha256_crypt.encrypt(POST_PASSWORD)
-
-    our_user.password = password
-    s.flush()
-    s.commit()

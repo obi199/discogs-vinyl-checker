@@ -24,8 +24,8 @@ def register():
         elif not POST_PASSWORD:
             error = 'Password is required.'
         # elif username exists:
-        add_user(db.User,POST_USERNAME, POST_PASSWORD)
-        flash('User created!')
+        error = add_user(db.User,POST_USERNAME, POST_PASSWORD)
+        flash(error)
         #return home()
     return render_template('auth/register.html')
 
@@ -35,8 +35,8 @@ def login():
     if request.method == 'POST':
         POST_USERNAME = str(request.form['username'])
         POST_PASSWORD = str(request.form['password'])
-        user = db.check_credentials(db.User,POST_USERNAME,POST_PASSWORD)
-        if POST_USERNAME:
+        user = check_credentials(db.User,POST_USERNAME,POST_PASSWORD)
+        if POST_USERNAME and POST_PASSWORD:
             if user:
                 # global discogsclient
                 # discogsclient = discogs_client.Client(discogs_settings.user_agent, result.consumer_key, \
@@ -80,11 +80,35 @@ def login_required(view):
     return wrapped_view
 
 def add_user(User,POST_USERNAME, POST_PASSWORD,consumer_key = 'KpmpkHQmVfudnTVufUME',consumer_secret = 'tEAvaSrmmXHKjzfHfqCAEWpXOdULpPXo', \
-    oauth_token = 'aXqDiWXTljKJtlyriboZOwUxBNyAhQDyOTqIaXJU',oauth_token_secret ='bTcOJUaVaTrNwENYgpnoPAaUzrNsTHdfFOTYTFjz'):
+    oauth_token = '',oauth_token_secret =''):
     USER_ID = uuid.uuid4()
     password = sha256_crypt.encrypt(POST_PASSWORD)
-    new_user = User(username = POST_USERNAME, password = password, consumer_key=consumer_key,consumer_secret= consumer_secret, \
-    oauth_token = oauth_token, oauth_token_secret=oauth_token_secret)
-    db.dbase.session.add(new_user)
-    db.dbase.session.flush()
-    db.dbase.session.commit()
+    if User.query.filter_by(username = POST_USERNAME).first() is None:
+        new_user = User(username = POST_USERNAME, password = password, consumer_key=consumer_key,consumer_secret= consumer_secret, \
+        oauth_token = oauth_token, oauth_token_secret=oauth_token_secret)
+        db.dbase.session.add(new_user)
+        db.dbase.session.flush()
+        db.dbase.session.commit()
+        error = 'User created'
+    else:
+        print ('error user existing!')
+        error = 'Username already exists!'
+    return error
+
+def check_encrypted_password(password, hashed):
+    return sha256_crypt.verify(password, hashed)
+
+def check_credentials(User, POST_USERNAME='', POST_PASSWORD=''):
+    query = User.query.filter_by(username = POST_USERNAME).first()
+    if query:
+        if check_encrypted_password(POST_PASSWORD, query.password):
+            return query
+
+def update_password(POST_USERNAME, POST_PASSWORD):
+
+    our_user = s.query(User).filter_by(username=POST_USERNAME).first()
+    password = sha256_crypt.encrypt(POST_PASSWORD)
+
+    our_user.password = password
+    s.flush()
+    s.commit()
