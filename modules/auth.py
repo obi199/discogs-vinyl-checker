@@ -80,7 +80,7 @@ def login_required(view):
     return wrapped_view
 
 def add_user(User,POST_USERNAME, POST_PASSWORD,consumer_key = 'KpmpkHQmVfudnTVufUME',consumer_secret = 'tEAvaSrmmXHKjzfHfqCAEWpXOdULpPXo', \
-    oauth_token = '',oauth_token_secret =''):
+    oauth_token = 'aXqDiWXTljKJtlyriboZOwUxBNyAhQDyOTqIaXJU',oauth_token_secret ='bTcOJUaVaTrNwENYgpnoPAaUzrNsTHdfFOTYTFjz'):
     USER_ID = uuid.uuid4()
     password = sha256_crypt.encrypt(POST_PASSWORD)
     if User.query.filter_by(username = POST_USERNAME).first() is None:

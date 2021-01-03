@@ -70,8 +70,7 @@ def my_form_post():
     # user_id = session.get('user_id')
     discogsclient = discogs_client.Client(discogs_settings.user_agent, g.user.consumer_key, \
      g.user.consumer_secret, g.user.oauth_token, g.user.oauth_token_secret)
-    k = search_API
-    search = k.results(search_name, discogsclient, format, type)
+    search = search_API.results(search_name, discogsclient, format, type)
     result_Number = search.results().count
     result_Pages = search.results().pages
     result_PerPage = search.results().per_page
@@ -102,20 +101,20 @@ def contact(type,item_id):
         have = k.query('community')['have']
         want = k.query('community')['want']
         tracklist = k.query('tracklist')
-        tracks = k.format_tracklist(tracklist)
         videos = k.videos()
         formats = k.query('formats')[0]['descriptions']
         styles = k.query('styles')
         image = k.query('images')[0]['resource_url']
         uri150 = k.query('images')[0]['uri150']
         uri = k.query('uri')
-
+        whosampled = k.query('artists')[0]['name'].replace(' ','+') + '+' +  k.query('title').replace(' ','+')
         #all_data = k.data()#json.dumps(k.data)
         return render_template('info.html', item_id = item_id, \
                 lowest_price = lowest_price, artists_name = artists_name, title = title, \
                 labels = labels, catno = catno, year = year, country = country, \
                 rating_average = rating_average, have = have, want = want, \
-                tracks = tracks, videos = videos, formats = formats, styles = styles, uri150=uri150, uri=uri)
+                videos = videos, formats = formats, styles = styles, uri150=uri150, \
+                uri=uri,whosampled=whosampled, tracklist=tracklist)
 
     elif type == 'master':
         master = discogsclient.master(item_id)

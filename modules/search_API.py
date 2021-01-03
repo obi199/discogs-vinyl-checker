@@ -73,13 +73,6 @@ class full_release_object(release_data):
         data = self._release.data
         json.dumps(data)
         return data
-    def format_tracklist(self, tracklist):
-        tracks = []
-        for track in tracklist  :
-            #x = ""
-            x = track['position'] + ": " + track['title'] + " " + track['duration']
-            tracks.append(x)
-        return tracks
     def videos(self):
         vids = []
         dict={}
