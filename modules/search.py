@@ -55,6 +55,8 @@ def main():
 #
 #     else:
 #         return render_template('search_discogs.html')
+#spotify embed
+#<iframe src="https://open.spotify.com/embed/track/48GDjA3bFuQfI1JotNO3Hq" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
 
 @bp.route('/search', methods=['POST','GET'])
 def my_form_post():
@@ -108,13 +110,14 @@ def contact(type,item_id):
         uri150 = k.query('images')[0]['uri150']
         uri = k.query('uri')
         whosampled = k.query('artists')[0]['name'].replace(' ','+') + '+' +  k.query('title').replace(' ','+')
-        #all_data = k.data()#json.dumps(k.data)
+        spotify = k.query('title').replace(' ','%20')
+        #('artists')[0]['name'].replace(' ','%20')  + '%20' +
         return render_template('info.html', item_id = item_id, \
                 lowest_price = lowest_price, artists_name = artists_name, title = title, \
                 labels = labels, catno = catno, year = year, country = country, \
                 rating_average = rating_average, have = have, want = want, \
                 videos = videos, formats = formats, styles = styles, uri150=uri150, \
-                uri=uri,whosampled=whosampled, tracklist=tracklist)
+                uri=uri,whosampled=whosampled, tracklist=tracklist, spotify=spotify)
 
     elif type == 'master':
         master = discogsclient.master(item_id)

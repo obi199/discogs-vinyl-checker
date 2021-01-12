@@ -23,10 +23,10 @@
     Rating: {{rating_average}} / 5 <br>
     Have: {{have}}  /  Want: {{want}} &nbsp; ({{(have/want) | round(2)}})<br>
       <a href=https://www.whosampled.com/search/?q={{whosampled}}>whosampled</a><br>
-       <a href=https://open.spotify.com/search/{{whosampled}}>spotify</a><br>
+       <a href=https://open.spotify.com/search/{{spotify}}>spotify</a><br>
     <b class="font-weight-bold">Tracklist </b>
     <p>{% for item in tracklist %}
-      {{item['position']}} {{item['title']}} {{item['duration']}} <a href=https://open.spotify.com/search/{{item['title']}}+{{artists_name}}>spotify</a><br></br>
+      {{item['position']}} {{item['title']}} {{item['duration']}} </iframe></br>
       {% endfor %}</p>
     <p>
       {% for item in videos %}
