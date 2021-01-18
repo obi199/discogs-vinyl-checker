@@ -58,27 +58,29 @@ def main():
 #spotify embed
 #<iframe src="https://open.spotify.com/embed/track/48GDjA3bFuQfI1JotNO3Hq" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
 
+
 @bp.route('/search', methods=['POST','GET'])
 def my_form_post():
-    #if request.method == 'POST':
-    text = request.form['text']
-    search_name = text
-    format = ''
-    type = ''
-    if request.form['format'] == '1':
-        format = 'vinyl'
-    if request.form['type'] == '1':
-        type = 'release'
-    # user_id = session.get('user_id')
-    discogsclient = discogs_client.Client(discogs_settings.user_agent, g.user.consumer_key, \
-     g.user.consumer_secret, g.user.oauth_token, g.user.oauth_token_secret)
-    search = search_API.results(search_name, discogsclient, format, type)
-    result_Number = search.results().count
-    result_Pages = search.results().pages
-    result_PerPage = search.results().per_page
-    results = search.release_results()
-    return render_template('results.html', results = results, result_Number = result_Number, \
-result_Pages = result_Pages, result_PerPage = result_PerPage)
+    if request.method == 'POST':
+        text = request.form['text']
+        format = ''
+        type = ''
+        if request.form['format'] == '1':
+            format = 'vinyl'
+        if request.form['type'] == '1':
+            type = 'release'
+        # user_id = session.get('user_id')
+        discogsclient = discogs_client.Client(discogs_settings.user_agent, g.user.consumer_key, \
+         g.user.consumer_secret, g.user.oauth_token, g.user.oauth_token_secret)
+        search = search_API.results(text, discogsclient, format, type)
+        result_Number = search.results().count
+        result_Pages = search.results().pages
+        result_PerPage = search.results().per_page
+        results = search.release_results()
+        return render_template('results.html', results = results, result_Number = result_Number, \
+    result_Pages = result_Pages, result_PerPage = result_PerPage)
+    else:
+        return main()
 
 @bp.route('/<type>/<item_id>', methods=['POST', 'GET'])
 def contact(type,item_id):
