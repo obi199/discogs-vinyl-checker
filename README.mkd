@@ -8,21 +8,25 @@
 - discogs_client
 - discogs_client_oauth
 - sqlalchemy
+- passlib
 
 
 How to run app:
 - create developer application in your discogs account
-- create user sqlite user database with credentials and keys and add in   settings
+- create new discogs_settings.py module
+- create user sqlite user database with credentials and keys and add in  discogs_settings
 - Run Project
 
 For Linux and Mac:
 in top level project directory:
 $ export FLASK_APP=modules
 $ export FLASK_ENV=development
-$ flask run
+$ flask run host 0.0.0.0 port 5000
 
 For Windows cmd, use set instead of export:
-
- set FLASK_APP=flaskr
+ set FLASK_APP=modules
  set FLASK_ENV=development
- flask run host 0.0.0.0 port 5000
+ python -m flask run
+
+Init User DB:
+-py -m flask init-db

@@ -3,16 +3,16 @@
 import functools
 from flask import jsonify, json, Flask, flash, redirect, render_template, request, session, abort
 from flask import Blueprint, flash, g, url_for
-import search_API
-from discogs_client_oauth import authenticate
+from modules import search_API
+from modules.discogs_client_oauth import authenticate
 import discogs_client
-import discogs_settings
+from modules import discogs_settings
 import os
 from sqlalchemy.orm import sessionmaker
 #from tabledef import *
 from flask_sqlalchemy import SQLAlchemy
 from modules.auth import login_required
-import db
+from modules import db
 # s = Session()
 #userc = tabledef.user()
 
@@ -162,11 +162,11 @@ def collection():
     discogsclient = discogs_settings.client
     c = search_API.user(discogsclient)
     user = c.identity()
-    print user
+    print(user)
     ucollection = c.collection()
 
-    print dir(ucollection)
-    print ucollection
+    #print(dir(ucollection))
+    print(ucollection)
     return render_template('collection.html', ucollection = ucollection)
 
 

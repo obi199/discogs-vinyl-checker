@@ -4,7 +4,6 @@ import discogs_client
 import logging
 
 logger = logging.getLogger(__name__)
-print logger
 handler = logging.StreamHandler()
 formatter = logging.Formatter(
         '%(asctime)s %(name)-12s %(levelname)-8s %(message)s')

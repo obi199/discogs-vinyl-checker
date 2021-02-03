@@ -1,8 +1,9 @@
+# -*- coding: utf-8 -*-
 import os
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask
 from sqlalchemy import *
-from discogs_settings import userdb, table
+from modules.discogs_settings import userdb, table
 
 def create_app(test_config=None):
     # create and configure the app
@@ -40,4 +41,5 @@ def create_app(test_config=None):
 
     from . import db
     db.dbase.init_app(app)
+    db.init_app(app)
     return app

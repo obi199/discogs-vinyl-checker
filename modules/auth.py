@@ -3,12 +3,12 @@
 import functools
 from flask import jsonify, json, Flask, redirect, render_template, request, session, abort
 from flask import Blueprint, flash, g, url_for
-from discogs_client_oauth import authenticate
+from modules.discogs_client_oauth import authenticate
 import discogs_client
-import discogs_settings
+from modules import discogs_settings
 import os
 from flask_sqlalchemy import SQLAlchemy
-import db
+from modules import db
 from passlib.hash import sha256_crypt
 import uuid
 
@@ -43,7 +43,7 @@ def login():
                 # result.consumer_secret, result.oauth_token, result.oauth_token_secret)
                 session['logged_in'] = True
                 session['user_id'] = user.id
-                print session['user_id']
+                print(session['user_id'])
                 return redirect('/')
             else:
                 flash('wrong password!')
@@ -91,7 +91,7 @@ def add_user(User,POST_USERNAME, POST_PASSWORD,consumer_key = 'KpmpkHQmVfudnTVuf
         db.dbase.session.commit()
         error = 'User created'
     else:
-        print ('error user existing!')
+        print('error user existing!')
         error = 'Username already exists!'
     return error
 

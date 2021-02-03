@@ -6,7 +6,7 @@
 # an API search API as an example. See README.md for further documentation.
 
 import sys
-import discogs_settings
+import modules.discogs_settings
 import discogs_client
 from discogs_client.exceptions import HTTPError
 
@@ -33,20 +33,19 @@ def authenticate():
     discogsclient.set_consumer_key(consumer_key, consumer_secret)
     token, secret, url = discogsclient.get_authorize_url()
 
-    print ' == Request Token == '
-    print '    * oauth_token        = {0}'.format(token)
-    print '    * oauth_token_secret = {0}'.format(secret)
-    print
+    print(' == Request Token == ')
+    print('    * oauth_token        = {0}'.format(token))
+    print('    * oauth_token_secret = {0}'.format(secret))
+
 
     # Prompt your user to "accept" the terms of your application. The application
     # will act on behalf of their discogs.com account.
     # If the user accepts, discogs displays a key to the user that is used for
     # verification. The key is required in the 2nd phase of authentication.
-    print 'Please browse to the following URL {0}'.format(url)
+    print('Please browse to the following URL {0}'.format(url))
 
     accepted = 'n'
     while accepted.lower() == 'n':
-        print
         accepted = raw_input('Have you authorized me at {0} [y/n] :'.format(url))
 
 
@@ -57,20 +56,20 @@ def authenticate():
     try:
         access_token, access_secret = discogsclient.get_access_token(oauth_verifier)
     except HTTPError:
-        print 'Unable to authenticate.'
+        print('Unable to authenticate.')
         sys.exit(1)
 
     # fetch the identity object for the current logged in user.
     user = discogsclient.identity()
 
     print
-    print ' == User =='
-    print '    * username           = {0}'.format(user.username)
-    print '    * name               = {0}'.format(user.name)
-    print ' == Access Token =='
-    print '    * oauth_token        = {0}'.format(access_token)
-    print '    * oauth_token_secret = {0}'.format(access_secret)
-    print ' Authentication complete. Future requests will be signed with the above tokens.'
+    print(' == User ==')
+    print('    * username           = {0}'.format(user.username))
+    print( '    * name               = {0}'.format(user.name))
+    print( ' == Access Token ==')
+    print( '    * oauth_token        = {0}'.format(access_token))
+    print( '    * oauth_token_secret = {0}'.format(access_secret))
+    print( ' Authentication complete. Future requests will be signed with the above tokens.')
 
     return discogsclient
 
