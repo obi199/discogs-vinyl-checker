@@ -14,7 +14,18 @@ import uuid
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
+def login_required(view):
+    @functools.wraps(view)
+    def wrapped_view(**kwargs):
+        if g.user is None:
+            return redirect(url_for('auth.login'))
+
+        return view(**kwargs)
+
+    return wrapped_view
+
 @bp.route('/register', methods=['POST','GET'])
+@login_required
 def register():
     if request.method == 'POST':
         POST_USERNAME = str(request.form['username'])
@@ -69,15 +80,6 @@ def logout():
     session['logged_in'] = False
     return redirect('/auth/login')
 
-def login_required(view):
-    @functools.wraps(view)
-    def wrapped_view(**kwargs):
-        if g.user is None:
-            return redirect(url_for('auth.login'))
-
-        return view(**kwargs)
-
-    return wrapped_view
 
 def add_user(User,POST_USERNAME, POST_PASSWORD,consumer_key = 'KpmpkHQmVfudnTVufUME',consumer_secret = 'tEAvaSrmmXHKjzfHfqCAEWpXOdULpPXo', \
     oauth_token = 'aXqDiWXTljKJtlyriboZOwUxBNyAhQDyOTqIaXJU',oauth_token_secret ='bTcOJUaVaTrNwENYgpnoPAaUzrNsTHdfFOTYTFjz'):

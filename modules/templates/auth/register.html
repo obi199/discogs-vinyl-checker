@@ -13,7 +13,21 @@
 <label class="login-field-icon fui-user" for="login-name"></label></div>
 <div class="control-group">
   <input type="password" class="login-field" value="" placeholder="password" name="password">
+  <label class="login-field-icon fui-lock" for="login-pass"></label></div>
+<div class="control-group">
+  <input type="consumer_key" class="login-field" value="" placeholder="consumer key" name="consumer_key">
 <label class="login-field-icon fui-lock" for="login-pass"></label></div>
+<div class="control-group">
+  <input type="consumer_secret" class="login-field" value="" placeholder="consumer secret" name="consumer_secret">
+<label class="login-field-icon fui-lock" for="login-pass"></label></div>
+<div class="control-group">
+  <input type="oauth_token" class="login-field" value="" placeholder="oauth token" name="oauth_token">
+<label class="login-field-icon fui-lock" for="login-pass"></label></div>
+<div class="control-group">
+  <input type="oauth_token_secret" class="login-field" value="" placeholder="oauth token secret" name="oauth_token_secret">
+<label class="login-field-icon fui-lock" for="login-pass"></label></div>
+
+
 <input type="submit" value="Create User" class="btn btn-primary btn-large btn-block">
 {% with messages = get_flashed_messages() %}
   {% if messages %}
