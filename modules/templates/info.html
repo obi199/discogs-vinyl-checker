@@ -30,9 +30,7 @@
       {% endfor %}</p>
     <p>
       {% for item in videos %}
-        {% for key, value in item.iteritems() %}
-            <iframe width="320" height="180" src="https://www.youtube.com/embed/{{value}}" frameborder="0" allowfullscreen></iframe><br>
-        {% endfor %}
+        <iframe width="320" height="180" src="https://www.youtube.com/embed/{{item}}" frameborder="0" allowfullscreen></iframe><br>
       {% endfor %}
 
     </p>

@@ -47,10 +47,8 @@ class release_data:
 
     def __init__(self, release):
         self._release = release
-
     def data(self):
         return self._release.data
-
     def query(self, qstring):
         if qstring in self._release.data:
             query = self._release.data[qstring]
@@ -67,19 +65,16 @@ class full_release_object(release_data):
     def __init__(self, release):
         self._release = release
         self._release.fetch(self._release.url)
-        #print self._release.data['resource_url']
     def data(self):
         data = self._release.data
         json.dumps(data)
         return data
     def videos(self):
         vids = []
-        dict={}
         if 'videos' in self._release.data:
+            dict={}
             for video in self._release.data['videos']:
-                vid_id = self.vid_id(video['uri'])
-                dict[video['description']] = vid_id
-            vids.append(dict)
+                vids.append(self.vid_id(video['uri']))
         return vids
     def vid_id(self, uri):
         string, vid_id = uri.split('v=')
@@ -110,10 +105,9 @@ class full_master_object:
         vids = []
         dict={}
         if 'videos' in self._master.data:
+            dict={}
             for video in self._master.data['videos']:
-                vid_id = self.vid_id(video['uri'])
-                dict[video['description']] = vid_id
-            vids.append(dict)
+                vids.append(self.vid_id(video['uri']))
         return vids
     def vid_id(self, uri):
         string, vid_id = uri.split('v=')

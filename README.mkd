@@ -1,5 +1,5 @@
 
-## Python web app built to search Discogs for vinyl releases ##
+## Simple google style Python Flask web app to search Discogs for vinyl ##
 
 **Requirements:**
 1. active discogs account
@@ -14,8 +14,10 @@
 How to run app:
 - create developer application in your discogs account
 - create new discogs_settings.py module
-- create user sqlite user database with credentials and keys and add in  discogs_settings
-- Run Project
+- create user sqlite user database with credentials and keys and add DB in discogs_settings
+- create dummy user in user db to run app initially
+- Run Project and login in with dummy user
+- run discogs_client_oauth from cli to create auth tokens and register with /auth/register
 
 For Linux and Mac:
 in top level project directory:

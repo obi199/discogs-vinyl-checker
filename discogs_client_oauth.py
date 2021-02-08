@@ -6,7 +6,7 @@
 # an API search API as an example. See README.md for further documentation.
 
 import sys
-import modules.discogs_settings
+from modules import discogs_settings
 import discogs_client
 from discogs_client.exceptions import HTTPError
 
@@ -19,12 +19,12 @@ from discogs_client.exceptions import HTTPError
 # demonstration purposes.
 def authenticate():
 
-    consumer_key = discogs_settings.consumer_key
-    consumer_secret = discogs_settings.consumer_secret
+    consumer_key = user = input("Please enter consumer key: ")
+    consumer_secret = input("Please enter consumer secret: ")
 
     # A user-agent is required with Discogs API requests. Be sure to make your
     # user-agent unique, or you may get a bad response.
-    user_agent = discogs_settings.user_agent
+    user_agent = input("Please enter user agent: ")
 
     # instantiate our discogs_client object.
     discogsclient = discogs_client.Client(user_agent)
@@ -46,12 +46,12 @@ def authenticate():
 
     accepted = 'n'
     while accepted.lower() == 'n':
-        accepted = raw_input('Have you authorized me at {0} [y/n] :'.format(url))
+        accepted = input('Have you authorized me at {0} [y/n] :'.format(url))
 
 
     # Waiting for user input. Here they must enter the verifier key that was
     # provided at the unqiue URL generated above.
-    oauth_verifier = raw_input('Verification code :').decode('utf8')
+    oauth_verifier = input('Verification code :')
 
     try:
         access_token, access_secret = discogsclient.get_access_token(oauth_verifier)

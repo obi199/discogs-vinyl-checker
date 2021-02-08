@@ -4,7 +4,7 @@ import functools
 from flask import jsonify, json, Flask, flash, redirect, render_template, request, session, abort
 from flask import Blueprint, flash, g, url_for
 from modules import search_API
-from modules.discogs_client_oauth import authenticate
+#from modules.discogs_client_oauth import authenticate
 import discogs_client
 from modules import discogs_settings
 import os
