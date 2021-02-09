@@ -1,0 +1,3 @@
+graft modules/static
+graft modules/templates
+global-exclude *.pyc
