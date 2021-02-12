@@ -48,16 +48,6 @@ def main():
 
         return render_template('search_discogs.html')
 
-# @bp.route('/search', methods=['GET'])
-# def search():
-#     if not session.get('logged_in'):
-#         return redirect('/auth/login')
-#
-#     else:
-#         return render_template('search_discogs.html')
-#spotify embed
-#<iframe src="https://open.spotify.com/embed/track/48GDjA3bFuQfI1JotNO3Hq" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-
 
 @bp.route('/search', methods=['POST','GET'])
 def my_form_post():
