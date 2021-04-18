@@ -3,7 +3,7 @@ from flask import jsonify, json, Flask, flash, redirect, render_template, reques
 from flask import Blueprint, flash, g, url_for, current_app
 from flask.cli import with_appcontext
 import click
-from modules import discogs_settings
+from modules import settings
 import os
 from sqlalchemy.orm import sessionmaker
 from flask_sqlalchemy import SQLAlchemy
@@ -20,7 +20,7 @@ from sqlalchemy.orm import sessionmaker
 dbase = SQLAlchemy()
 
 class User(dbase.Model):
-    __tablename__ = discogs_settings.table
+    __tablename__ = settings.table
     id = dbase.Column(Integer, primary_key=True, autoincrement=True)
     username = dbase.Column(String)
     password = dbase.Column(String)

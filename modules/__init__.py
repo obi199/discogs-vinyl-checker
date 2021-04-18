@@ -3,14 +3,13 @@ import os
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask
 from sqlalchemy import *
-import discogs_settings
-from modules.discogs_settings import userdb, table
+from modules.settings import userdb, table, SECRET_KEY
 
 def create_app(test_config=None):
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
-        SECRET_KEY=discogs_settings.SECRET_KEY,
+        SECRET_KEY=SECRET_KEY,
         )#DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
 
     if test_config is None:
@@ -33,7 +32,7 @@ def create_app(test_config=None):
     from . import auth
     app.register_blueprint(auth.bp)
 
-    app.config['SQLALCHEMY_DATABASE_URI'] = discogs_settings.userdb
+    app.config['SQLALCHEMY_DATABASE_URI'] = userdb
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     from . import search
