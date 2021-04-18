@@ -13,31 +13,7 @@ from sqlalchemy.orm import sessionmaker
 from flask_sqlalchemy import SQLAlchemy
 from modules.auth import login_required
 from modules import db
-# s = Session()
-#userc = tabledef.user()
 
-# @app.route('/')
-# def home():
-#     if not session.get('logged_in'):
-#         return render_template('login.html')
-#         #return render_template('new_user.html')
-#     else:
-#         return render_template('search_discogs.html')
-
-
-    # if request.method == 'POST':
-    #     if str(request.form['new_user']):
-    #         return render_template('new_user.html')
-    #
-
-
-
-#
-# @app.route("/logout")
-# def logout():
-#     session['logged_in'] = False
-#     return home()
-#
 bp = Blueprint('search', __name__)
 
 @bp.route('/', methods=['POST','GET'])

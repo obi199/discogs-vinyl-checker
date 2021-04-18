@@ -3,13 +3,14 @@ import os
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask
 from sqlalchemy import *
+import discogs_settings
 from modules.discogs_settings import userdb, table
 
 def create_app(test_config=None):
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
-        SECRET_KEY=r'\xfa\xa83\xa3+\xae\xcarL\xa1\x8d\xec{\xa1oI',
+        SECRET_KEY=discogs_settings.SECRET_KEY,
         )#DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
 
     if test_config is None:
