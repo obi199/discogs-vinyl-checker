@@ -6,7 +6,7 @@ from flask import Blueprint, flash, g, url_for
 from modules import search_API
 #from modules.discogs_client_oauth import authenticate
 import discogs_client
-from modules import discogs_settings
+from modules import settings
 import os
 from sqlalchemy.orm import sessionmaker
 #from tabledef import *
@@ -36,7 +36,7 @@ def my_form_post():
         if request.form['type'] == '1':
             type = 'release'
         # user_id = session.get('user_id')
-        discogsclient = discogs_client.Client(discogs_settings.user_agent, g.user.consumer_key, \
+        discogsclient = discogs_client.Client(settings.user_agent, g.user.consumer_key, \
          g.user.consumer_secret, g.user.oauth_token, g.user.oauth_token_secret)
         search = search_API.results(text, discogsclient, format, type)
         result_Number = search.results().count
@@ -53,7 +53,7 @@ def contact(type,item_id):
     # if request.method == 'POST':
     #     item_id = item_id #request.form['foo']
 
-    discogsclient = discogs_client.Client(discogs_settings.user_agent, g.user.consumer_key, \
+    discogsclient = discogs_client.Client(settings.user_agent, g.user.consumer_key, \
      g.user.consumer_secret, g.user.oauth_token, g.user.oauth_token_secret)
 
     if type == 'release':
@@ -122,18 +122,18 @@ def contact(type,item_id):
         None
         #item_id = k.search_discogs(rObject).id(rObject)
 
-@bp.route('/collection', methods=['POST','GET'])
-def collection():
-    import discogs_settings
-    discogsclient = discogs_settings.client
-    c = search_API.user(discogsclient)
-    user = c.identity()
-    print(user)
-    ucollection = c.collection()
-
-    #print(dir(ucollection))
-    print(ucollection)
-    return render_template('collection.html', ucollection = ucollection)
+# @bp.route('/collection', methods=['POST','GET'])
+# def collection():
+#     import discogs_settings
+#     discogsclient = discogs_settings.client
+#     c = search_API.user(discogsclient)
+#     user = c.identity()
+#     print(user)
+#     ucollection = c.collection()
+#
+#     #print(dir(ucollection))
+#     print(ucollection)
+#     return render_template('collection.html', ucollection = ucollection)
 
 
 

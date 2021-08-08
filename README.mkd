@@ -3,21 +3,13 @@
 
 **Requirements:**
 1. active discogs account
-2. Python:
-- Flask
-- discogs_client
-- discogs_client_oauth
-- sqlalchemy
-- passlib
+2. Python: requirements.txt
 
-
-How to run app:
 - create developer application in your discogs account
-- create new discogs_settings.py module
-- create user sqlite user database with credentials and keys and add DB in discogs_settings
-- create dummy user in user db to run app initially
-- Run Project and login in with dummy user
 - run discogs_client_oauth from cli to create auth tokens and register with /auth/register
+- copy settings template to settings.py and update
+- create user DB with table and insert in settings
+How to run app:
 
 For Linux and Mac:
 in top level project directory:
@@ -31,4 +23,5 @@ For Windows cmd, use set instead of export:
  python -m flask run
 
 Init User DB:
--py -m flask init-db
+
+-python -m flask init-db

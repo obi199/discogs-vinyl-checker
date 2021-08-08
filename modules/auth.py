@@ -5,7 +5,7 @@ from flask import jsonify, json, Flask, redirect, render_template, request, sess
 from flask import Blueprint, flash, g, url_for
 #from modules.discogs_client_oauth import authenticate
 import discogs_client
-from modules import discogs_settings
+#from modules import discogs_settings
 import os
 from flask_sqlalchemy import SQLAlchemy
 from modules import db
@@ -30,12 +30,17 @@ def register():
     if request.method == 'POST':
         POST_USERNAME = str(request.form['username'])
         POST_PASSWORD = str(request.form['password'])
+        consumer_key = str(request.form['consumer_key'])
+        consumer_secret = str(request.form['consumer_secret'])
+        oauth_token = str(request.form['oauth_token'])
+        oauth_token_secret = str(request.form['oauth_token_secret'])
+
         if not POST_USERNAME:
             error = 'Username is required.'
         elif not POST_PASSWORD:
             error = 'Password is required.'
         # elif username exists:
-        error = add_user(db.User,POST_USERNAME, POST_PASSWORD)
+        error = add_user(db.User,POST_USERNAME, POST_PASSWORD,consumer_key,consumer_secret,oauth_token,oauth_token_secret)
         flash(error)
         #return home()
     return render_template('auth/register.html')
