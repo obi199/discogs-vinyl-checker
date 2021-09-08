@@ -1,5 +1,6 @@
 *.pyc
 *.db
+*.csv
 *settings*
 *userdb*
 venv/

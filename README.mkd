@@ -1,5 +1,5 @@
 
-## Simple google style Python Flask web app to search Discogs for vinyl ##
+## Simple Flask web app to search Discogs for vinyl ##
 
 **Requirements:**
 1. active discogs account
@@ -9,19 +9,21 @@
 - run discogs_client_oauth from cli to create auth tokens and register with /auth/register
 - copy settings template to settings.py and update
 - create user DB with table and insert in settings
-How to run app:
 
-For Linux and Mac:
+#How to run app:
+#For Linux and Mac:
 in top level project directory:
+activate Environment: $ activate venv "source venv/bin/activate"
+
 $ export FLASK_APP=modules
 $ export FLASK_ENV=development
 $ flask run --host=0.0.0.0 --port=5000
 
-For Windows cmd, use set instead of export:
- set FLASK_APP=modules
- set FLASK_ENV=development
- python -m flask run
+#For Windows cmd, use set instead of export:
+activate venv: "C:\> env\Scripts\activate.bat"
+set FLASK_APP=modules
+set FLASK_ENV=development
+python -m flask run
 
-Init User DB:
-
+#Init User DB:
 -python -m flask init-db
