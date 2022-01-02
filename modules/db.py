@@ -12,10 +12,7 @@ from sqlalchemy import create_engine, ForeignKey
 from sqlalchemy import Column, Date, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, backref
-#from modules.discogs_settings import userdb, table
 from sqlalchemy.orm import sessionmaker
-#from passlib.hash import sha256_crypt
-#import uuid
 
 dbase = SQLAlchemy()
 
