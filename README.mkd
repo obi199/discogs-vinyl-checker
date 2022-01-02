@@ -1,7 +1,7 @@
 
-## Simple Flask web app to search Discogs for vinyl ##
+## Simple web app to search Discogs database for vinyl releases ##
 
-searches discogs and optional tables in custom db.
+flask webapp to search the discogs API and optional tables in custom db.
 
 **Requirements:**
 1. active discogs account
