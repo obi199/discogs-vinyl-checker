@@ -41,17 +41,19 @@ class results:
             'format': k.query('format'),\
             'in_collection': k.query('user_data')['in_collection'],\
             'in_wantlist': k.query('user_data')['in_wantlist'], \
-            'in_table2':self.check_with_table2(k.query('title'))}
-            #logger.info(newDic['in_table2'])
+            'in_table2':self.check_with_table2(k.query('title'))} #check with extra custom table in db
             release_results.append(newDic)
         return release_results
 
     def check_with_table2(self, title):
-        query =  db.Table2.query.filter_by(title = title).first()
-        if query:
-            return query.track
-        else:
-            return None
+        try:
+            query =  db.Table2.query.filter_by(title = title).first()
+            if query:
+                return query.track
+            else:
+                return None
+        except:
+                return None
 
 
 
