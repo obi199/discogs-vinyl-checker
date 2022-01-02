@@ -2,6 +2,7 @@
 import json
 import discogs_client
 import logging
+from modules import db
 
 logger = logging.getLogger(__name__)
 handler = logging.StreamHandler()
@@ -23,12 +24,13 @@ class results:
         return results
     def release_results(self):
         items_per_page = int(self._results.per_page)
-        results_per_page = []
+        release_results = []
         for i in self._results.page(0):
             k = release_data(i)
+            #logger.info(k.data())
             logger.info(str(k.query('user_data')))
             newDic = {'type': k.query('type'),\
-            'name':k.query('title'), \
+            'title':k.query('title'), \
             'hyperlink': "https://www.discogs.com"  + i.data['uri'], \
             'year' : k.query('year'), \
             'label': k.query('label'), \
@@ -38,10 +40,20 @@ class results:
             'id': k.query('id'),\
             'format': k.query('format'),\
             'in_collection': k.query('user_data')['in_collection'],\
-            'in_wantlist': k.query('user_data')['in_wantlist']}
-            #logger.info(newDic)
-            results_per_page.append(newDic)
-        return results_per_page
+            'in_wantlist': k.query('user_data')['in_wantlist'], \
+            'in_table2':self.check_with_table2(k.query('title'))}
+            #logger.info(newDic['in_table2'])
+            release_results.append(newDic)
+        return release_results
+
+    def check_with_table2(self, title):
+        query =  db.Table2.query.filter_by(title = title).first()
+        if query:
+            return query.track
+        else:
+            return None
+
+
 
 class release_data:
 

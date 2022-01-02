@@ -8,12 +8,12 @@
 - create developer application in your discogs account
 - run discogs_client_oauth from cli to create auth tokens and register with /auth/register
 - copy settings template to settings.py and update
-- create user DB with table and insert in settings
+- create user DB with table and insert link in settings
 
 #How to run app:
 #For Linux and Mac:
 in top level project directory:
-activate Environment: $ activate venv "source venv/bin/activate"
+activate Environment: $ source pathname_venv/bin/activate
 
 $ export FLASK_APP=modules
 $ export FLASK_ENV=development

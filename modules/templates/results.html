@@ -24,7 +24,7 @@
     <p> {{result_Number}} results</p>
     {% for item in results %}
 
-      <a href=/{{item['type']}}/{{item['id']}}>{{item['name']}}</a> ({{item['type']}})
+      <a href=/{{item['type']}}/{{item['id']}}>{{item['title']}}</a> ({{item['type']}})
       {{item['format'][0]}}    {{item['format'][1]}}     {{item['country']}} {{item['year']}}
       {{item['label'][0]}}    {{item['catno']}}  &nbsp; have: {{item['community']['have']}}   want: {{item['community']['want']}} &nbsp;
 
@@ -35,6 +35,10 @@
 
       {% if item['in_wantlist'] is sameas true %}
       <svg width="10" height="10"><circle cx="5" cy="5" r="5" stroke="red" stroke-width="1" fill="red" /></svg>
+      {% endif %}
+
+      {% if item['in_table2'] -%}
+      <svg width="10" height="10"><circle cx="5" cy="5" r="5" stroke="blue" stroke-width="1" fill="blue" /></svg> {{item['in_table2']}}
       {% endif %}
 
     </p>

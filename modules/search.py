@@ -42,16 +42,14 @@ def my_form_post():
         result_Number = search.results().count
         result_Pages = search.results().pages
         result_PerPage = search.results().per_page
-        results = search.release_results()
-        return render_template('results.html', results = results, result_Number = result_Number, \
+        release_results = search.release_results()
+        return render_template('results.html', results = release_results, result_Number = result_Number, \
     result_Pages = result_Pages, result_PerPage = result_PerPage)
     else:
         return main()
 
 @bp.route('/<type>/<item_id>', methods=['POST', 'GET'])
 def contact(type,item_id):
-    # if request.method == 'POST':
-    #     item_id = item_id #request.form['foo']
 
     discogsclient = discogs_client.Client(settings.user_agent, g.user.consumer_key, \
      g.user.consumer_secret, g.user.oauth_token, g.user.oauth_token_secret)

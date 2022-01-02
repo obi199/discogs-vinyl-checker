@@ -5,7 +5,7 @@ from flask.cli import with_appcontext
 import click
 from modules import settings
 import os
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, column_property
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import *
 from sqlalchemy import create_engine, ForeignKey
@@ -28,6 +28,17 @@ class User(dbase.Model):
     consumer_secret = dbase.Column(String)
     oauth_token = dbase.Column(String)
     oauth_token_secret = dbase.Column(String)
+
+class Table2(dbase.Model):
+
+   __tablename__ = settings.table2
+   id = Column(Integer, primary_key = True)
+   artist = Column(String)
+   album = Column(String)
+   track = Column(String)
+   label = Column(String)
+   year = Column(String)
+   title = column_property(artist + " - " + album)
 
 def __init__(self, username, password,consumer_key,consumer_secret,oauth_token,oauth_token_secret):
     #self.id = id
