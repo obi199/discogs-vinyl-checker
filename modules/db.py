@@ -16,6 +16,7 @@ from sqlalchemy.orm import sessionmaker
 
 dbase = SQLAlchemy()
 
+
 class User(dbase.Model):
     __tablename__ = settings.table
     id = dbase.Column(Integer, primary_key=True, autoincrement=True)
@@ -26,10 +27,11 @@ class User(dbase.Model):
     oauth_token = dbase.Column(String)
     oauth_token_secret = dbase.Column(String)
 
+
 class Table2(dbase.Model):
 
    __tablename__ = settings.table2
-   id = Column(Integer, primary_key = True)
+   id = Column(Integer, primary_key=True)
    artist = Column(String)
    album = Column(String)
    track = Column(String)
@@ -37,14 +39,15 @@ class Table2(dbase.Model):
    year = Column(String)
    title = column_property(artist + " - " + album)
 
-def __init__(self, username, password,consumer_key,consumer_secret,oauth_token,oauth_token_secret):
-    #self.id = id
-    self.username = username
-    self.password = password
-    self.consumer_key = consumer_key
-    self.consumer_secret = consumer_secret
-    self.oauth_token = oauth_token
-    self.oauth_token_secret = oauth_token_secret
+# def __init__(self, username, password,consumer_key,consumer_secret,oauth_token,oauth_token_secret):
+#     #self.id = id
+#     self.username = username
+#     self.password = password
+#     self.consumer_key = consumer_key
+#     self.consumer_secret = consumer_secret
+#     self.oauth_token = oauth_token
+#     self.oauth_token_secret = oauth_token_secret
+
 
 @click.command('init-db')
 @with_appcontext
@@ -53,6 +56,7 @@ def init_db():
     #     dbase.executescript(f.read().decode('utf8'))
     dbase.create_all()
     click.echo('Initialized the database.')
+
 
 def init_app(app):
     #app.teardown_appcontext(close_db)
