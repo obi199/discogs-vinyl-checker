@@ -16,7 +16,7 @@ flask webapp to search the discogs API and optional tables in custom db.
 #For Linux and Mac:
 in top level project directory:
 activate Environment: $ source pathname_venv/bin/activate
-
+Run FLask Dev Server:
 $ export FLASK_APP=modules
 $ export FLASK_ENV=development
 $ flask run --host=0.0.0.0 --port=5000
