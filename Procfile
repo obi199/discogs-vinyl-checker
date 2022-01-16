@@ -1,1 +1,1 @@
-web: waitress-serve --call 'modules:create_app'
+web: waitress-serve --port=$PORT --call 'modules:create_app'
