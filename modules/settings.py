@@ -1,3 +1,6 @@
+#userdb = r"sqlite:////home/obi/dev/python/discogs-checker/db/user.db"
 userdb = ""
-table = ""
-SECRET_KEY=""
+table = "users"
+SECRET_KEY="jDuOXpDaXjdF8"
+user_agent="discogs_fast_checker/1.0"
+table2="drumbreaks"
