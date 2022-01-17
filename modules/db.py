@@ -39,14 +39,14 @@ class Table2(dbase.Model):
    year = Column(String)
    title = column_property(artist + " - " + album)
 
-# def __init__(self, username, password,consumer_key,consumer_secret,oauth_token,oauth_token_secret):
-#     #self.id = id
-#     self.username = username
-#     self.password = password
-#     self.consumer_key = consumer_key
-#     self.consumer_secret = consumer_secret
-#     self.oauth_token = oauth_token
-#     self.oauth_token_secret = oauth_token_secret
+def __init__(self, username, password,consumer_key,consumer_secret,oauth_token,oauth_token_secret):
+    #self.id = id
+    self.username = username
+    self.password = password
+    self.consumer_key = consumer_key
+    self.consumer_secret = consumer_secret
+    self.oauth_token = oauth_token
+    self.oauth_token_secret = oauth_token_secret
 
 
 @click.command('init-db')
