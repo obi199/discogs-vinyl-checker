@@ -64,7 +64,7 @@ def login():
             if user:
                 session['logged_in'] = True
                 session['user_id'] = user.id
-                logger.info('user logged in : ' session['user_id'])
+                logger.info('user logged in : ' + session['user_id'])
                 return redirect('/')
             else:
                 flash('wrong password!')
