@@ -33,7 +33,7 @@ class results:
         for i in self._results.page(0):
             k = release_data(i)
             #logger.info(k.data())
-            logger.info(str(k.query('user_data')))
+            #logger.info(str(k.query('user_data')))
             newDic = {'type': k.query('type'),
                       'title': k.query('title'),
                       'group_title': k.query('title').split(" - "),

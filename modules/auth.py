@@ -12,6 +12,14 @@ from modules import db
 from passlib.hash import sha256_crypt
 import uuid
 
+logger = logging.getLogger(__name__)
+handler = logging.StreamHandler()
+formatter = logging.Formatter(
+        '%(asctime)s %(name)-12s %(levelname)-8s %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+logger.setLevel(logging.DEBUG)
+
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
 def login_required(view):
@@ -56,10 +64,11 @@ def login():
             if user:
                 session['logged_in'] = True
                 session['user_id'] = user.id
-                print(session['user_id'])
+                logger.info('user logged in : ' session['user_id'])
                 return redirect('/')
             else:
                 flash('wrong password!')
+                logger.info('failed login')
     return render_template('auth/login.html')
 
 
