@@ -6,7 +6,7 @@ from flask import Blueprint, flash, g, url_for
 #from modules.discogs_client_oauth import authenticate
 import discogs_client
 #from modules import discogs_settings
-import os
+import os, logging
 from flask_sqlalchemy import SQLAlchemy
 from modules import db
 from passlib.hash import sha256_crypt
