@@ -15,17 +15,21 @@ flask webapp to search the discogs API and optional tables in custom db.
 #How to run app:
 #For Linux and Mac:
 in top level project directory:
-activate Environment: $ source pathname_venv/bin/activate
+activate Environment: $ source discogs_checker_venv/bin/activate
 Run FLask Dev Server:
 $ export FLASK_APP=modules
 $ export FLASK_ENV=development
 $ flask run --host=0.0.0.0 --port=5000
+
 
 #For Windows cmd, use set instead of export:
 activate venv: "C:\> env\Scripts\activate.bat"
 set FLASK_APP=modules
 set FLASK_ENV=development
 python -m flask run
+
+#prod server
+$ waitress-serve --call 'modules:create_app'
 
 #Init User DB:
 -python -m flask init-db
