@@ -16,7 +16,8 @@ Flask based python webapp to search via API and with optional extra tables...
 #For Linux and Mac:
 in top level project directory:
 activate Environment: $ source discogs_checker_venv/bin/activate
-Run FLask Dev Server:
+Run Flask Dev Server:
+
 `$ export FLASK_APP=modules
 $ export FLASK_ENV=development
 $ flask run --host=0.0.0.0 --port=5000`
@@ -25,6 +26,7 @@ $ flask run --host=0.0.0.0 --port=5000`
 #For Windows cmd, use set instead of export:
 
 activate venv:
+
 `"C:\> env\Scripts\activate.bat"
 set FLASK_APP=modules
 set FLASK_ENV=development
