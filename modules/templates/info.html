@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+  </head>
+<body class="text-center">
+
+<div class="container">
+    <h5><b> {{artists_name}} - {{title}}</b> </h5>
+    <img src={{uri150}} alt="picture"><br>
+    ({{country}} {{year}})
+    {% for item in formats %}
+    {{item}},
+    {% endfor %}<br>
+    Label: {{labels}} ({{catno}})<br>
+    Style: {% for item in styles %}
+      {{item}},
+      {% endfor %}<br>
+    Lowest sales price : {{lowest_price}} €<br>
+    Rating: {{rating_average}} / 5 <br>
+    Have: {{have}}  /  Want: {{want}} &nbsp; ({{(have/want) | round(2)}})<br>
+      <a href=https://www.whosampled.com/search/?q={{whosampled}}>whosampled</a><br>
+       <a href=https://open.spotify.com/search/{{spotify}}>spotify</a><br>
+    <b class="font-weight-bold">Tracklist </b>
+    <p>{% for item in tracklist %}
+      {{item['position']}} {{item['title']}} {{item['duration']}} </iframe></br>
+      {% endfor %}</p>
+    <p>
+      {% for item in videos %}
+        <iframe width="320" height="180" src="https://www.youtube.com/embed/{{item}}" frameborder="0" allowfullscreen></iframe><br>
+      {% endfor %}
+
+    </p>
+    <p>
+    <button onclick="goBack()">Go Back</button>   <a href={{uri}} class="button">Go to Discogs</a>
+    <script>
+    function goBack() {
+        window.history.back();
+    }
+    </script>
+
+    </p>
+<body>
+</div>
+</html>

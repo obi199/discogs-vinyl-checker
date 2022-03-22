@@ -1,0 +1,5 @@
+userdb = ''
+table = ''
+table2 = ''
+SECRET_KEY = ''
+user_agent =' '
