@@ -1,8 +1,7 @@
 import os
-#userdb = r"sqlite:////home/obi/dev/python/discogs-checker/db/user.db"
-userdb = r'postgresql://gscikpcgepjvqm:f02461c199a6a555a6846025c2de077f7b8a6af02830a3ddf764a67f2c7281b7@ec2-18-234-17-166.compute-1.amazonaws.com:5432/dbpltgqbgksg4t'
-#userdb = os.getenv('DATBASE_URL')
-table = "users"
-SECRET_KEY="jDuOXpDaXjdF8"
-user_agent="discogs_fast_checker/1.0"
-table2="drumbreaks"
+
+userdb = os.getenv('DATABASE_URL') #DATABASE_URL_LOCAL
+table = os.getenv('TABLE_1') #"users" #TABLE_1
+SECRET_KEY=os.getenv('SECRET_KEY') #"jDuOXpDaXjdF8" #SECRET_KEY
+user_agent=os.getenv('USER_AGENT') #"discogs_fast_checker/1.0" #USER_AGENT
+table2=os.getenv('TABLE_2') #"drumbreaks" #TABLE_2
