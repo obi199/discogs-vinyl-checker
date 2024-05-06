@@ -17,3 +17,11 @@ htmlcov/
 dist/
 build/
 *.egg-info/
+*scraper.py
+.gitignore
+*docker*
+Docker*
+basic.conf
+Procfile
+fly*
+*venv*

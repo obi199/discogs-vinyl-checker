@@ -75,30 +75,3 @@ def authenticate():
 if __name__ == '__main__':
     authenticate()
 
-# With an active auth token, we're able to reuse the client object and request
-# # additional discogs authenticated endpoints, such as database search.
-# search_results = discogsclient.search('House For All', type='release',
-#         artist='Blunted Dummies')
-#
-# print '\n== Search results for release_title=House For All =='
-# for release in search_results:
-#     print '\n\t== discogs-id {id} =='.format(id=release.id)
-#     print u'\tArtist\t: {artist}'.format(artist=', '.join(artist.name for artist
-#                                          in release.artists))
-#     print u'\tTitle\t: {title}'.format(title=release.title)
-#     print u'\tYear\t: {year}'.format(year=release.year)
-#     print u'\tLabels\t: {label}'.format(label=','.join(label.name for label in
-#                                         release.labels))
-#
-# # You can reach into the Fetcher lib if you wish to used the wrapped requests
-# # library to download an image. The following example demonstrates this.
-# image = search_results[0].images[0]['uri']
-# content, resp = discogsclient._fetcher.fetch(None, 'GET', image,
-#                 headers={'User-agent': discogsclient.user_agent})
-#
-# print ' == API image request =='
-# print '    * response status      = {0}'.format(resp)
-# print '    * saving image to disk = {0}'.format(image.split('/')[-1])
-#
-# with open(image.split('/')[-1], 'w') as fh:
-#     fh.write(content)
