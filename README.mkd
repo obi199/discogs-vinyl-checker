@@ -1,16 +1,16 @@
 
-## Simple web app to search Discogs database for vinyl releases ##
+## Simple web app to search Discogs database quickly for vinyl releases ##
 
-flask webapp to search the discogs API and optional tables in custom db.
+flask webapp to search the discogs API and with optional extra tables...
 
 **Requirements:**
 1. active discogs account
-2. Python: requirements.txt
+2. Python3: requirements.txt
 
 - create developer application in your discogs account
-- run discogs_client_oauth from cli to create auth tokens and register with /auth/register
 - copy settings template to settings.py and update
-- create user DB with table and insert link in settings
+- create user DB with table and insert in settings
+- run discogs_client_oauth from cli to create auth tokens and register with /auth/register
 
 #How to run app:
 #For Linux and Mac:
@@ -23,12 +23,12 @@ $ flask run --host=0.0.0.0 --port=5000
 
 
 #For Windows cmd, use set instead of export:
-activate venv: "C:\> env\Scripts\activate.bat"
+activate venv: "\Scripts\activate.bat"
 set FLASK_APP=modules
 set FLASK_ENV=development
-python -m flask run
+python3 -m flask run
 
-#prod server
+#prod server example
 $ waitress-serve --call 'modules:create_app'
 
 #Init User DB:
