@@ -1,27 +1,51 @@
+# Python
+__pycache__/
 *.pyc
-*.db
+*.pyo
+*.pyd
 *.csv
-*settings*
-*userdb*
+
+# Environment
+.env
+*.env
+.venv/
 venv/
 discogs_checker_venv/
-
-__pycache__/
-
 instance/
 
+# IDEs
+.idea/
+.vscode/
+*.code-workspace
+
+# Logs and temporary files
+*.log
+cookies.txt
+*.swp
+
+# Testing
 .pytest_cache/
 .coverage
 htmlcov/
 
+# Build and distribution
 dist/
 build/
 *.egg-info/
+
+# Databases
+*.db
+*.sqlite
+
+# OS specific
+.DS_Store
+Thumbs.db
+
+# Project specific
+.junie/
+*settings*
 *scraper.py
-.gitignore
 *docker*
 Docker*
 basic.conf
-Procfile
 fly*
-*venv*
