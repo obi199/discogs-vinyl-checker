@@ -10,7 +10,48 @@ flask webapp to search the discogs API and with optional extra tables...
 - create developer application in your discogs account
 - copy settings template to settings.py and update
 - create user DB with table and insert in settings
-- run discogs_client_oauth from cli to create auth tokens and register with /auth/register
+
+#Init User DB and Demo:
+$ python3 init_db.py
+(Credentials for the demo user can be configured in the .env file)
+
+#Register & Authentication Workflow:
+
+1. **Create a Discogs Developer Application**
+   - Go to https://www.discogs.com/settings/developers
+   - Create a new application to obtain your `consumer_key` and `consumer_secret`
+
+2. **Obtain OAuth Tokens**
+   - Run the OAuth script from the CLI:
+     ```
+     python3 discogs_client_oauth.py
+     ```
+   - Enter your `consumer_key` and `consumer_secret` when prompted
+   - Enter your `user_agent` (e.g. `discogs_fast_checker/1.0`)
+   - The script will provide a URL — open it in your browser and authorize the application
+   - Enter the verification code displayed by Discogs
+   - The script will output your `oauth_token` and `oauth_token_secret` — save these
+
+3. **Start the App** (see below) and **Log In**
+   - Log in with the demo user credentials (configured in `.env`: `DEMO_USER` / `DEMO_PASS`)
+   - Navigate to `/auth/login`
+
+4. **Register a New User with API Credentials**
+   - While logged in, go to `/auth/register`
+   - Fill in a new username and password
+   - Enter all four Discogs API credentials:
+     - `consumer_key`
+     - `consumer_secret`
+     - `oauth_token`
+     - `oauth_token_secret`
+   - Submit the form to create the user
+
+5. **Log In as the Registered User**
+   - Log out and log back in with the newly registered user
+   - You can now search the Discogs database — API calls will be authenticated with your OAuth credentials
+
+> **Note:** The demo user has empty API tokens and cannot make Discogs API calls.
+> You must register a user with valid credentials to use the search functionality.
 
 #How to run app:
 #For Linux and Mac:
