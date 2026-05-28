@@ -7,13 +7,10 @@ flask webapp to search the discogs API and with optional extra tables...
 1. active discogs account
 2. Python3: requirements.txt
 
-- create developer application in your discogs account
-- copy settings template to settings.py and update
-- create user DB with table and insert in settings
+- Create a Discogs developer application
+- Configure your `.env` file (see Setup below)
+- Initialize the database with `init_db.py`
 
-#Init User DB and Demo:
-$ python3 init_db.py
-(Credentials for the demo user can be configured in the .env file)
 
 #Register & Authentication Workflow:
 
@@ -54,23 +51,41 @@ $ python3 init_db.py
 > You must register a user with valid credentials to use the search functionality.
 
 #How to run app:
-#For Linux and Mac:
-in top level project directory:
-activate Environment: $ source discogs_checker_venv/bin/activate
-Run FLask Dev Server:
-$ export FLASK_APP=modules
-$ export FLASK_ENV=development
-$ flask run --host=0.0.0.0 --port=5000
+
+### 1. Installation & Environment Setup
+1. **Create and activate a virtual environment:**
+   ```bash
+   python3 -m venv .venv
+   source .venv/bin/activate  # Linux/Mac
+   # .\.venv\Scripts\activate  # Windows
+   ```
+
+2. **Install dependencies:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. **Configure Environment Variables:**
+   Create a `.env` file in the project root with your PostgreSQL and application settings --> see settings file
 
 
-#For Windows cmd, use set instead of export:
-activate venv: "\Scripts\activate.bat"
-set FLASK_APP=modules
-set FLASK_ENV=development
-python3 -m flask run
+### 2. Initialize the Database
+Run the initialization script to create the necessary PostgreSQL tables and the demo user:
+```bash
+python3 init_db.py
+```
 
-#prod server example
-$ waitress-serve --call 'modules:create_app'
+### 3. Start the Application
 
-#Init User DB:
--python -m flask init-db
+**Development Server (Flask):**
+```bash
+export FLASK_APP=modules
+export FLASK_DEBUG=1
+flask run --host=0.0.0.0 --port=5000
+```
+*(On Windows cmd, use `set` instead of `export`)*
+
+**Production Server (Waitress):**
+```bash
+waitress-serve --port=5000 --call 'modules:create_app'
+```
