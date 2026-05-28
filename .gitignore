@@ -45,7 +45,5 @@ Thumbs.db
 .junie/
 *settings*
 *scraper.py
-*docker*
-Docker*
 basic.conf
 fly*
