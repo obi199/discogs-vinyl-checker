@@ -28,6 +28,6 @@ setup(
         'SQLAlchemy==2.0.50',
         'urllib3==2.7.0',
         'waitress==3.0.2',
-        'Werkzeug==3.1.8',
+        'Werkzeug==3.1.9',
     ],
 )
