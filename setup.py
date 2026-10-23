@@ -8,7 +8,7 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=[
-        'certifi==2024.7.4',
+        'certifi==2026.10.19',
         'charset-normalizer==2.0.4',
         'click==8.4.1',
         'discogs-client==2.3.0',
